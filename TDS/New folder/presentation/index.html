@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Quarterly Earnings Report - RevealJS</title>
+    <meta name="viewport" content="width=1280, initial-scale=1.0">
+    <!-- RevealJS core and theme from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Highlight.js for code syntax -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/monokai.css">
+    <!-- Mermaid for diagrams -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs"></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Title Slide -->
+        <section>
+          <h1>Quarterly Earnings Report</h1>
+          <p>by Financial Analytics Team</p>
+          <p>Email: <a href="mailto:23f2004781@ds.study.iitm.ac.in">23f2004781@ds.study.iitm.ac.in</a></p>
+          <aside class="notes">Welcome stakeholders. This presentation covers the latest quarterly earnings with interactive charts and insights.</aside>
+        </section>
+        <!-- Markdown Slide -->
+        <section data-markdown>
+          <textarea data-template>
+## Key Highlights
+- Revenue growth: **15% YoY**
+- Net profit: **$40M**
+- EPS: **$2.10**
+- <span class="fragment">Dividend declared: **$0.50/share**</span>
+
+---
+
+## Financial Formula
+\[\text{EPS} = \frac{\text{Net Income} - \text{Dividends}}{\text{Shares Outstanding}}\]
+
+---
+
+```python
+# Sample code: Calculate EPS
+net_income = 40000000
+shares = 19000000
+dividends = 5000000
+eps = (net_income - dividends) / shares
+print(f"EPS: ${eps:.2f}")
+```
+          </textarea>
+        </section>
+        <!-- Animated Fragments Slide -->
+        <section>
+          <h2>Quarterly Breakdown</h2>
+          <ul>
+            <li class="fragment">Q1: $25M</li>
+            <li class="fragment">Q2: $30M</li>
+            <li class="fragment fade-up">Q3: $35M</li>
+            <li class="fragment fade-up">Q4: $30M</li>
+          </ul>
+          <aside class="notes">Use fragments to reveal each quarter's earnings one by one for emphasis.</aside>
+        </section>
+        <!-- Code Sample with Highlighting -->
+        <section>
+          <h2>Data Processing Example</h2>
+          <pre><code class="python" data-line-numbers="1-2|4,6-7|9">
+import pandas as pd
+import seaborn as sns
+# Load data
+data = pd.read_csv('data/analysis.json')
+# Create visualization
+sns.barplot(data=data, x='quarters', y='earnings')
+          </code></pre>
+          <aside class="notes">Show how data can be processed and visualized using Python.</aside>
+        </section>
+        <!-- Math Equation Slide -->
+        <section>
+          <h2>Profit Margin Formula</h2>
+          \[\text{Profit Margin} = \frac{\text{Net Profit}}{\text{Revenue}}\times 100\%\]
+          <aside class="notes">This formula is key for financial analysis.</aside>
+        </section>
+        <!-- Mermaid Diagram -->
+        <section>
+          <div class="mermaid">graph TD; Revenue-->Profit; Revenue-->Expenses; Expenses-->Profit</div>
+          <aside class="notes">Diagram shows the relationship between revenue, expenses, and profit.</aside>
+        </section>
+        <!-- Interactive Chart (Placeholder) -->
+        <section>
+          <h2>Live Data Visualization</h2>
+          <div class="chart" id="d3-chart"></div>
+          <script src="https://d3js.org/d3.v7.min.js"></script>
+          <script src="js/visualizations.js"></script>
+          <script>
+            // Example D3 chart (replace with real data/logic)
+            const svg = d3.select("#d3-chart").append("svg").attr("width", 400).attr("height", 200);
+            svg.append("rect").attr("x", 50).attr("y", 50).attr("width", 300).attr("height", 100).attr("fill", "#4e79a7");
+          </script>
+          <aside class="notes">This chart can be replaced with a real-time data visualization.</aside>
+        </section>
+        <!-- Speaker Notes Example -->
+        <section>
+          <h2>Thank You</h2>
+          <p>Questions?</p>
+          <aside class="notes">Open the floor for questions and feedback.</aside>
+        </section>
+      </div>
+    </div>
+    <!-- RevealJS core and plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/math/math.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
+    <script>
+      Reveal.initialize({
+        width: 1280,
+        height: 720,
+        margin: 0.04,
+        controls: true,
+        progress: true,
+        history: true,
+        autoSlide: 0,
+        transition: "slide",
+        plugins: [ RevealMarkdown, RevealHighlight, RevealMath, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>

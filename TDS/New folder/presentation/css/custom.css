@@ -1,0 +1,19 @@
+/* Custom theme for RevealJS presentation */
+.reveal {
+  font-family: "Arial", sans-serif;
+}
+.reveal .slides section.has-dark-background {
+  color: #fff;
+}
+.chart {
+  height: 400px;
+  margin: 20px auto;
+  width: 100%;
+}
+:root {
+  --r-main-font-size: calc(0.5vw + 0.5vh + 0.5vmin);
+}
+.chart {
+  width: 100%;
+  height: calc(100vh - 200px);
+}
