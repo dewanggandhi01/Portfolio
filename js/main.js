@@ -372,16 +372,17 @@ function initStatsCounter() {
             if (entry.isIntersecting) {
                 const statNumber = entry.target;
                 const target = parseInt(statNumber.getAttribute('data-target'));
+                const showPlus = statNumber.hasAttribute('data-plus');
                 let count = 0;
                 const increment = target / 100;
                 
                 const updateCount = () => {
                     if (count < target) {
                         count += increment;
-                        statNumber.textContent = Math.ceil(count);
+                        statNumber.textContent = Math.ceil(count) + (showPlus ? '+' : '');
                         setTimeout(updateCount, 20);
                     } else {
-                        statNumber.textContent = target;
+                        statNumber.textContent = target + (showPlus ? '+' : '');
                     }
                 };
                 
@@ -554,8 +555,14 @@ function closeProjectModal() {
 // Contact form functionality
 function initContactForm() {
     const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const formStatus = document.getElementById('form-status');
     
     if (!contactForm) return;
+    
+    // Initialize EmailJS (Replace with your credentials)
+    emailjs.init('YOUR_PUBLIC_KEY'); // Replace with your EmailJS public key
     
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -566,37 +573,67 @@ function initContactForm() {
         
         // Validate form
         if (validateContactForm(data)) {
-            // Show success message
-            showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            btnText.textContent = 'Sending...';
+            submitBtn.style.opacity = '0.7';
             
-            // Reset form
-            contactForm.reset();
-            
-            // In a real application, you would send the data to your backend
-            console.log('Contact form data:', data);
+            // Send email using EmailJS
+            emailjs.sendForm(
+                'YOUR_SERVICE_ID',    // Replace with your EmailJS service ID
+                'YOUR_TEMPLATE_ID',   // Replace with your EmailJS template ID
+                this
+            ).then(
+                function(response) {
+                    // Success
+                    showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+                    contactForm.reset();
+                    
+                    // Reset button
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Send Message';
+                    submitBtn.style.opacity = '1';
+                    
+                    console.log('SUCCESS!', response.status, response.text);
+                },
+                function(error) {
+                    // Error
+                    showNotification('Failed to send message. Please try again or contact me directly.', 'error');
+                    
+                    // Reset button
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Send Message';
+                    submitBtn.style.opacity = '1';
+                    
+                    console.log('FAILED...', error);
+                }
+            );
         }
     });
 }
 
 function validateContactForm(data) {
-    const { name, email, subject, message } = data;
+    const name = data.from_name;
+    const email = data.from_email;
+    const subject = data.subject;
+    const message = data.message;
     
-    if (!name.trim()) {
+    if (!name || !name.trim()) {
         showNotification('Please enter your name.', 'error');
         return false;
     }
     
-    if (!email.trim() || !isValidEmail(email)) {
+    if (!email || !email.trim() || !isValidEmail(email)) {
         showNotification('Please enter a valid email address.', 'error');
         return false;
     }
     
-    if (!subject.trim()) {
+    if (!subject || !subject.trim()) {
         showNotification('Please enter a subject.', 'error');
         return false;
     }
     
-    if (!message.trim()) {
+    if (!message || !message.trim()) {
         showNotification('Please enter your message.', 'error');
         return false;
     }

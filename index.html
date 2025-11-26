@@ -14,6 +14,9 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- Three.js and GSAP for Interactive Particles -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r98/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
 </head>
 <body>
     <!-- Growing Animation Loader -->
@@ -132,16 +135,10 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <!-- Floating Animation Elements -->
-        <div class="floating-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-            <div class="shape shape-4"></div>
-            <div class="shape shape-5"></div>
-        </div>
+        <!-- Interactive Particles Canvas -->
+        <canvas id="particleCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: #000000;"></canvas>
         
-        <div class="hero-content">
+        <div class="hero-content" style="position: relative; z-index: 2;">
             <div class="hero-text" data-aos="fade-up">
                 <h1 class="hero-title">
                     Hi, I'm <span class="forest-text">
@@ -164,10 +161,6 @@
                     <span id="typing-text"></span>
                     <span class="cursor">|</span>
                 </div>
-                <p class="hero-description">
-                    Data Science & AI Engineer passionate about building intelligent solutions with Machine Learning, 
-                    and cutting-edge technology. Currently pursuing BS in Data Science at IIT Madras.
-                </p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">
                         <i class="fas fa-envelope"></i>
@@ -222,27 +215,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="hero-image" data-aos="fade-left">
-                <div class="profile-card">
-                    <div class="profile-image">
-                        <img src="assets/profile.jpg" alt="Dewang Gandhi" class="profile-img">
-                    </div>
-                    <div class="floating-elements">
-                        <div class="floating-icon" style="--delay: 0s">
-                            <i class="fab fa-python"></i>
-                        </div>
-                        <div class="floating-icon" style="--delay: 1s">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <div class="floating-icon" style="--delay: 2s">
-                            <i class="fab fa-js-square"></i>
-                        </div>
-                        <div class="floating-icon" style="--delay: 3s">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="scroll-indicator">
             <div class="scroll-text">Scroll Down</div>
@@ -279,11 +251,11 @@
                 </div>
                 <div class="about-stats scroll-reveal-right" data-aos="fade-left">
                     <div class="stat-card scroll-reveal-scale">
-                        <div class="stat-number" data-target="300">0</div>
+                        <div class="stat-number" data-target="300" data-plus>0</div>
                         <div class="stat-label">Problems Solved</div>
                     </div>
                     <div class="stat-card scroll-reveal-scale">
-                        <div class="stat-number" data-target="10">0</div>
+                        <div class="stat-number" data-target="10" data-plus>0</div>
                         <div class="stat-label">Major Projects</div>
                     </div>
                     <div class="stat-card scroll-reveal-scale">
@@ -299,45 +271,6 @@
 
     <!-- Education Section -->
     <section id="education" class="education section">
-        <!-- Floating Fish Overlay -->
-        <div class="floating-fish-overlay">
-            <div class="fish">
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-            </div>
-
-            <div class="fish">
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-            </div>
-
-            <div class="seaLevel"></div>
-        </div>
-
-        <!-- Koi Fish Background Animation -->
-        <div class="koi-background">
-            <div class="fish">
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-            </div>
-            <div class="fish">
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-                <div class="koiCoil"></div><div class="koiCoil"></div><div class="koiCoil"></div>
-            </div>
-        </div>
-        
         <div class="container">
             <div class="section-header" data-aos="fade-up">
                 <h2 class="section-title">Education</h2>
@@ -570,6 +503,8 @@
                         <span class="skill-tag">Git</span>
                         <span class="skill-tag">Docker</span>
                         <span class="skill-tag">Vercel</span>
+                        <span class="skill-tag">Railway</span>
+                        <span class="skill-tag">Render</span>
                     </div>
                 </div>
 
@@ -586,7 +521,7 @@
                 </div>
 
                 <!-- Specialized Skills -->
-                <div class="skill-domain-card skill-domain-highlight" data-aos="fade-up" data-aos-delay="800">
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="800">
                     <div class="skill-domain-header">
                         <h3>Specialized</h3>
                     </div>
@@ -1035,11 +970,11 @@
                 <div class="contact-form" data-aos="fade-left">
                     <form id="contact-form">
                         <div class="form-group">
-                            <input type="text" name="name" id="name" required>
+                            <input type="text" name="from_name" id="name" required>
                             <label for="name">Your Name</label>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" id="email" required>
+                            <input type="email" name="from_email" id="email" required>
                             <label for="email">Your Email</label>
                         </div>
                         <div class="form-group">
@@ -1050,11 +985,12 @@
                             <textarea name="message" id="message" rows="5" required></textarea>
                             <label for="message">Your Message</label>
                         </div>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="submit-btn">
                             <i class="fas fa-paper-plane"></i>
-                            Send Message
+                            <span id="btn-text">Send Message</span>
                         </button>
                     </form>
+                    <div id="form-status" class="form-status"></div>
                 </div>
             </div>
         </div>
@@ -1123,8 +1059,10 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="js/particles-hero.js"></script>
     <script src="js/projects.js"></script>
     <script src="js/main.js"></script>
 </body>
