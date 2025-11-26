@@ -653,28 +653,10 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 
-// Theme toggle functionality
+// Theme toggle functionality - Dark theme is now default
 function initThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const icon = themeToggle.querySelector('i');
-    
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme, icon);
-    
-    themeToggle.addEventListener('click', function() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme, icon);
-    });
-}
-
-function updateThemeIcon(theme, icon) {
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    // Set dark theme as default
+    document.documentElement.setAttribute('data-theme', 'dark');
 }
 
 // Back to top functionality
