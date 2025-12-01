@@ -96,6 +96,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  font-size: 15px;
 }
 
 body {
@@ -1381,6 +1382,10 @@ html {
 }
 
 @media (max-width: 768px) {
+  html {
+    font-size: 13px;
+  }
+
   .hero-content {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -2300,13 +2305,13 @@ section.focus .section-title {
 .skills-modern-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .skill-domain-card {
   background: var(--bg-card);
-  padding: 2rem;
+  padding: 1.25rem;
   border-radius: 0;
   border: 1px solid var(--border-color);
   backdrop-filter: blur(25px) saturate(180%);
@@ -3114,9 +3119,8 @@ input[type=radio][name="achievement-slider"] {
 }
 
 .contact-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  display: flex;
+  justify-content: center;
   align-items: start;
 }
 
@@ -3128,6 +3132,9 @@ input[type=radio][name="achievement-slider"] {
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   height: fit-content;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
 }
 
 .contact-card h3 {
@@ -3146,38 +3153,22 @@ input[type=radio][name="achievement-slider"] {
 .contact-details {
   display: grid;
   gap: 0.75rem;
+  justify-items: center;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  justify-content: center;
 }
 
 .contact-item i {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  display: none;
 }
 
 .contact-item .x-logo-svg {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 13px;
-  fill: white;
+  display: none;
 }
 
 .contact-item div {
@@ -3302,6 +3293,7 @@ input[type=radio][name="achievement-slider"] {
 
   .contact-card {
     padding: 0.75rem;
+    text-align: center;
   }
 
   .contact-card h3 {
@@ -3317,21 +3309,20 @@ input[type=radio][name="achievement-slider"] {
 
   .contact-details {
     gap: 0.35rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .contact-item {
     gap: 0.4rem;
+    justify-content: center;
+    text-align: center;
   }
 
   .contact-item i,
   .contact-item .x-logo-svg {
-    width: 32px;
-    height: 32px;
-    font-size: 0.85rem;
-  }
-
-  .contact-item .x-logo-svg {
-    padding: 7px;
+    display: none;
   }
 
   .contact-item span {
@@ -3703,8 +3694,7 @@ input[type=radio][name="achievement-slider"] {
   }
 
   .section-subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+    display: none;
   }
 
   .about-content {
@@ -3713,6 +3703,7 @@ input[type=radio][name="achievement-slider"] {
 
   .about-text {
     padding: 1.25rem;
+    text-align: center;
   }
 
   .about-text p {
@@ -3722,27 +3713,30 @@ input[type=radio][name="achievement-slider"] {
   .about-text h3 {
     margin-bottom: 0.5rem;
     margin-top: 0.75rem;
+    text-align: center;
   }
 
   .about-stats {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
   }
 
   .stat-card {
-    padding: 1.25rem;
+    padding: 0.75rem 0.5rem;
   }
 
   .stat-number {
     margin-bottom: 0.25rem;
+    font-size: 1.5rem;
   }
 
   .stat-label {
     margin: 0;
+    font-size: 0.65rem;
   }
 
   .projects-filter {
-    justify-content: flex-start;
+    justify-content: center;
     overflow-x: auto;
     padding-bottom: 0.5rem;
     gap: 0.15rem;
