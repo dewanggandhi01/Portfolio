@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dewang Gandhi - Data Science & AI Engineer</title>
+    <meta name="description" content="Portfolio of Dewang Gandhi - Data Science & AI Engineer specializing in Machine Learning and Full-Stack Development">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Three.js and GSAP for Interactive Particles -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r98/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+</head>
+<body>
+    <!-- Growing Animation Loader -->
+    <div id="preloader">
+        <div class="growing"></div>
+    </div>
+
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active" data-section="home">
+                    <span class="ocean-text">
+                        <span class="ocean-char">H</span>
+                        <span class="ocean-char">o</span>
+                        <span class="ocean-char">m</span>
+                        <span class="ocean-char">e</span>
+                    </span>
+                </a>
+                <a href="#about" class="nav-link" data-section="about">
+                    <span class="ocean-text">
+                        <span class="ocean-char">A</span>
+                        <span class="ocean-char">b</span>
+                        <span class="ocean-char">o</span>
+                        <span class="ocean-char">u</span>
+                        <span class="ocean-char">t</span>
+                    </span>
+                </a>
+                <a href="#education" class="nav-link" data-section="education">
+                    <span class="ocean-text">
+                        <span class="ocean-char">E</span>
+                        <span class="ocean-char">d</span>
+                        <span class="ocean-char">u</span>
+                        <span class="ocean-char">c</span>
+                        <span class="ocean-char">a</span>
+                        <span class="ocean-char">t</span>
+                        <span class="ocean-char">i</span>
+                        <span class="ocean-char">o</span>
+                        <span class="ocean-char">n</span>
+                    </span>
+                </a>
+                <a href="#experience" class="nav-link" data-section="experience">
+                    <span class="ocean-text">
+                        <span class="ocean-char">E</span>
+                        <span class="ocean-char">x</span>
+                        <span class="ocean-char">p</span>
+                        <span class="ocean-char">e</span>
+                        <span class="ocean-char">r</span>
+                        <span class="ocean-char">i</span>
+                        <span class="ocean-char">e</span>
+                        <span class="ocean-char">n</span>
+                        <span class="ocean-char">c</span>
+                        <span class="ocean-char">e</span>
+                    </span>
+                </a>
+                <a href="#projects" class="nav-link" data-section="projects">
+                    <span class="ocean-text">
+                        <span class="ocean-char">P</span>
+                        <span class="ocean-char">r</span>
+                        <span class="ocean-char">o</span>
+                        <span class="ocean-char">j</span>
+                        <span class="ocean-char">e</span>
+                        <span class="ocean-char">c</span>
+                        <span class="ocean-char">t</span>
+                        <span class="ocean-char">s</span>
+                    </span>
+                </a>
+                <a href="#skills" class="nav-link" data-section="skills">
+                    <span class="ocean-text">
+                        <span class="ocean-char">S</span>
+                        <span class="ocean-char">k</span>
+                        <span class="ocean-char">i</span>
+                        <span class="ocean-char">l</span>
+                        <span class="ocean-char">l</span>
+                        <span class="ocean-char">s</span>
+                    </span>
+                </a>
+                <a href="#achievements" class="nav-link" data-section="achievements">
+                    <span class="ocean-text">
+                        <span class="ocean-char">A</span>
+                        <span class="ocean-char">c</span>
+                        <span class="ocean-char">h</span>
+                        <span class="ocean-char">i</span>
+                        <span class="ocean-char">e</span>
+                        <span class="ocean-char">v</span>
+                        <span class="ocean-char">e</span>
+                        <span class="ocean-char">m</span>
+                        <span class="ocean-char">e</span>
+                        <span class="ocean-char">n</span>
+                        <span class="ocean-char">t</span>
+                        <span class="ocean-char">s</span>
+                    </span>
+                </a>
+                <a href="#contact" class="nav-link" data-section="contact">
+                    <span class="ocean-text">
+                        <span class="ocean-char">C</span>
+                        <span class="ocean-char">o</span>
+                        <span class="ocean-char">n</span>
+                        <span class="ocean-char">t</span>
+                        <span class="ocean-char">a</span>
+                        <span class="ocean-char">c</span>
+                        <span class="ocean-char">t</span>
+                    </span>
+                </a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Interactive Particles Canvas -->
+        <canvas id="particleCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: #000000;"></canvas>
+        
+        <div class="hero-content" style="position: relative; z-index: 2;">
+            <div class="hero-text" data-aos="fade-up">
+                <h1 class="hero-title">
+                    Hi, I'm <span class="forest-text">
+                        <span class="forest-char">D</span>
+                        <span class="forest-char">E</span>
+                        <span class="forest-char">W</span>
+                        <span class="forest-char">A</span>
+                        <span class="forest-char">N</span>
+                        <span class="forest-char">G</span>
+                        <span class="forest-space"> </span>
+                        <span class="forest-char">G</span>
+                        <span class="forest-char">A</span>
+                        <span class="forest-char">N</span>
+                        <span class="forest-char">D</span>
+                        <span class="forest-char">H</span>
+                        <span class="forest-char">I</span>
+                    </span>
+                </h1>
+                <div class="hero-subtitle">
+                    <span id="typing-text"></span>
+                    <span class="cursor">|</span>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        Get In Touch
+                    </a>
+                    <a href="#projects" class="btn btn-secondary">
+                        <i class="fas fa-code"></i>
+                        View Projects
+                    </a>
+                    <a href="assets/Dewang Gandhi Resume.pdf" class="btn btn-outline" target="_blank" download>
+                        <i class="fas fa-download"></i>
+                        Download Resume
+                    </a>
+                </div>
+                <div class="hero-social">
+                    <ul class="social-icons-enhanced">
+                        <li>
+                            <a href="https://wa.me/+919411654775" target="_blank" title="WhatsApp">
+                                <i class="fab fa-whatsapp icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://linkedin.com/in/dewang-gandhi-21323b331" target="_blank" title="LinkedIn">
+                                <i class="fab fa-linkedin-in icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://x.com/dewang__gandhi" target="_blank" title="X (Twitter)">
+                                <svg class="x-logo-svg icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/dewanggandhi01" target="_blank" title="GitHub">
+                                <i class="fab fa-github icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://leetcode.com/dewang_gandhi01" target="_blank" title="LeetCode">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="leetcode-svg icon">
+                                    <title>LeetCode</title>
+                                    <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:dewanggandhi2@gmail.com" title="Email">
+                                <i class="fas fa-envelope icon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-text">Scroll Down</div>
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+        <div class="container">
+            <div class="section-header scroll-reveal" data-aos="fade-up">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Get to know more about my journey and passion</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text scroll-reveal-left" data-aos="fade-right">
+                    <div class="about-card">
+                        <h3>My Journey</h3>
+                        <p>
+                            I am a passionate Data Science and AI Engineer currently pursuing my BS in Data Science at IIT Madras 
+                            while completing my B.Tech in Computer Science and Engineering at ABES Engineering College with a stellar 8.5 CGPA.
+                        </p>
+                        <p>
+                            My expertise spans across Machine Learning, Full-Stack Development, and Data Analytics. 
+                            I have hands-on experience building AI-powered solutions, from data analysis agents to virtual teaching assistants.
+                        </p>
+                        <p>
+                            Beyond academics, I'm passionate about competitive programming and continuously expanding my technical expertise 
+                            through real-world projects and innovative solutions.
+                        </p>
+                    </div>
+                </div>
+                <div class="about-stats scroll-reveal-right" data-aos="fade-left">
+                    <div class="stat-card scroll-reveal-scale">
+                        <div class="stat-number" data-target="300" data-plus>0</div>
+                        <div class="stat-label">Problems Solved</div>
+                    </div>
+                    <div class="stat-card scroll-reveal-scale">
+                        <div class="stat-number" data-target="10" data-plus>0</div>
+                        <div class="stat-label">Major Projects</div>
+                    </div>
+                    <div class="stat-card scroll-reveal-scale">
+                        <div class="stat-number" data-target="25">0</div>
+                        <div class="stat-label">Top 25% Kaggle</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+    <!-- Education Section -->
+    <section id="education" class="education section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Education</h2>
+                <p class="section-subtitle">My academic journey and achievements</p>
+            </div>
+            <div class="education-timeline">
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-marker">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <h3>BS in Data Science</h3>
+                            <h4>Indian Institute of Technology, Madras (Online)</h4>
+                            <div class="timeline-date">2023 - 2027</div>
+                            <div class="timeline-grade">CGPA: 7.8</div>
+                            <p>Specializing in advanced data science techniques, machine learning algorithms, and statistical analysis.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-marker">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <h3>B.Tech in Computer Science and Engineering</h3>
+                            <h4>ABES Engineering College, Ghaziabad</h4>
+                            <div class="timeline-date">2023 - 2027</div>
+                            <div class="timeline-grade">CGPA: 8.5</div>
+                            <p>Comprehensive study of computer science fundamentals, software engineering, and advanced programming concepts.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="timeline-marker">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <h3>Senior Secondary (Class XII), CBSE</h3>
+                            <h4>Krishna International School, Aligarh</h4>
+                            <div class="timeline-date">2022 - 2023</div>
+                            <div class="timeline-grade">Percentage: 93.8%</div>
+                            <p>Focused on PCM (Physics, Chemistry, Mathematics) with excellent academic performance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="timeline-marker">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <h3>Secondary School (Class X), CBSE</h3>
+                            <h4>Krishna International School, Aligarh</h4>
+                            <div class="timeline-date">2020 - 2021</div>
+                            <div class="timeline-grade">Percentage: 93.2% (Overall Grade: A1)</div>
+                            <p>Outstanding performance across all subjects with consistent A-grade achievements.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Experience</h2>
+                <p class="section-subtitle">Professional work experience and contributions</p>
+            </div>
+            <div class="education-timeline">
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-marker">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <h3>Business Analyst (Project-Based)</h3>
+                            <h4>Gandhi Traders Wholesale, Aligarh, U.P.</h4>
+                            <div class="timeline-date">Jan 2024 – Mar 2024</div>
+                            <div class="experience-details">
+                                <ul>
+                                    <li>Digitized 20+ days of handwritten records into structured Excel sheets; analyzed sales/inventory data to identify ₹13.1L revenue, ₹1.16L profit, overstocking in 10+ low-demand SKUs, and ₹4.8L revenue concentration in top 2 customers.</li>
+                                    <li>Recommended inventory optimization & reorder thresholds, reducing excess stock by 18% and improving purchase efficiency by 12%; suggested customer diversification strategies.</li>
+                                    <li>Built Excel-based sales forecasting/seasonal demand models and delivered 15+ reports on profitability, stock, and customer insights for procurement and expansion decisions.</li>
+                                </ul>
+                            </div>
+                            <div class="experience-tags">
+                                <span class="tag">Data Analysis</span>
+                                <span class="tag">Excel</span>
+                                <span class="tag">Business Intelligence</span>
+                                <span class="tag">Inventory Management</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-marker">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <h3>Senior Cadet - National Cadet Corps (NCC)</h3>
+                            <h4>ABES Engineering College, Ghaziabad</h4>
+                            <div class="timeline-date">Present</div>
+                            <div class="experience-details">
+                                <ul>
+                                    <li>C-Certificate Holder and Senior NCC Member from the inaugural NCC batch of ABES Engineering College</li>
+                                    <li>Actively led cadet training sessions and mentored new recruits</li>
+                                    <li>Organized and participated in college parades, ceremonial events, and social service drives</li>
+                                    <li>Demonstrated leadership, discipline, and commitment to national service</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects section projects-modern">
+        <div class="grain-bg"></div>
+        
+        <div class="container projects-container">
+            <div class="relative">
+                <span class="header-text scroll-reveal">
+                    innovative solutions
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+                
+                <h1 class="projects-main-title scroll-reveal">Featured Projects & Technical Excellence</h1>
+                
+                <div class="projects-filter scroll-reveal" data-aos="fade-up" data-aos-delay="100">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ai">AI/ML</button>
+                    <button class="filter-btn" data-filter="data">Data Science</button>
+                    <button class="filter-btn" data-filter="automation">Automation</button>
+                    <button class="filter-btn" data-filter="web">Full-Stack</button>
+                </div>
+                
+                <div class="projects-grid modern-grid" id="projects-grid">
+                    <!-- Project cards will be dynamically generated by JavaScript with new styling -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills section skills-modern">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Skills & Technologies</h2>
+                <p class="section-subtitle">Technical expertise powering innovation</p>
+            </div>
+            
+            <div class="skills-modern-grid">
+                <!-- Programming Languages -->
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-domain-header">
+                        <h3>Languages</h3>
+                    </div>
+                    <div class="skill-tags-grid">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">SQL</span>
+                    </div>
+                </div>
+
+                <!-- Machine Learning & AI -->
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skill-domain-header">
+                        <h3>ML & AI</h3>
+                    </div>
+                    <div class="skill-tags-grid">
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Model Evaluation</span>
+                    </div>
+                </div>
+
+                <!-- AI & LLM Tools -->
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="skill-domain-header">
+                        <h3>LLM & Generative AI</h3>
+                    </div>
+                    <div class="skill-tags-grid">
+                        <span class="skill-tag">OpenAI API</span>
+                        <span class="skill-tag">Function Calling</span>
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">LLM Agents</span>
+                    </div>
+                </div>
+
+                <!-- Web Development -->
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="skill-domain-header">
+                        <h3>Web Development</h3>
+                    </div>
+                    <div class="skill-tags-grid">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                    </div>
+                </div>
+
+                <!-- Data Engineering -->
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="skill-domain-header">
+                        <h3>Data Engineering</h3>
+                    </div>
+                    <div class="skill-tags-grid">
+                        <span class="skill-tag">Data Cleaning</span>
+                        <span class="skill-tag">Power BI</span>
+                        <span class="skill-tag">Business Analytics</span>
+                    </div>
+                </div>
+
+                <!-- DevOps & Cloud -->
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="skill-domain-header">
+                        <h3>DevOps & Cloud</h3>
+                    </div>
+                    <div class="skill-tags-grid">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Vercel</span>
+                        <span class="skill-tag">Railway</span>
+                        <span class="skill-tag">Render</span>
+                    </div>
+                </div>
+
+                <!-- Tools & IDEs -->
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="700">
+                    <div class="skill-domain-header">
+                        <h3>Tools & IDEs</h3>
+                    </div>
+                    <div class="skill-tags-grid">
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Jupyter</span>
+                        <span class="skill-tag">GitHub Copilot</span>
+                    </div>
+                </div>
+
+                <!-- Specialized Skills -->
+                <div class="skill-domain-card" data-aos="fade-up" data-aos-delay="800">
+                    <div class="skill-domain-header">
+                        <h3>Specialized</h3>
+                    </div>
+                    <div class="skill-tags-grid">
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Competitive Programming</span>
+                        <span class="skill-tag">Data Visualization</span>
+                        <span class="skill-tag">API Development</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- Animated Tools Ribbon Section -->
+    <section class="animated-ribbon-section section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Tools & Technologies</h2>
+                <p class="section-subtitle">Cutting-edge tools and technologies powering my development workflow</p>
+            </div>
+        </div>
+        <div class="w-full overflow-hidden">
+            <svg class="ribbon" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="1920" height="1080" viewBox="0 0 1920 1080">
+                
+                <!-- Define tech logos -->
+                <defs>
+                    <!-- Git Logo (Font Awesome) -->
+                    <g id="git-logo">
+                        <path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.67-1.337-.396-1.983l-2.481-2.481v6.529c.176.088.342.207.488.355.713.713.713 1.867 0 2.58-.719.713-1.867.713-2.58 0-.719-.713-.719-1.867 0-2.58.177-.18.38-.307.605-.394V8.835c-.225-.087-.428-.214-.605-.394-.545-.543-.676-1.342-.396-1.997L7.636 4.645.45 11.83c-.603.604-.603 1.582 0 2.186l10.48 10.48c.604.604 1.582.604 2.186 0L23.546 13.116c.603-.603.603-1.582 0-2.187" fill="#F05032"/>
+                    </g>
+                    
+                    <!-- Docker Logo (Font Awesome) -->
+                    <g id="docker-logo">
+                        <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.186.186 0 00.186-.185V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.186.186 0 00.185-.185V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.186.186 0 00.186-.185V6.29a.186.186 0 00-.186-.185H5.136a.186.186 0 00-.186.185v1.888c0 .102.084.185.186.185m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.186.186 0 00.185-.185V9.006a.185.185 0 00-.185-.186H8.1a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186H5.136a.186.186 0 00-.186.186v1.888c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186h-2.12a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338 0-.676.033-.951.098-.033-.164-.098-.394-.164-.522C19.78 6.93 18.45 5.895 16.83 5.828c-.656.98-.656 2.569 0 3.549l.13.29c.097.226.097.459 0 .685-.194.4-.454.747-.772 1.031-.881.71-1.283.91-1.85.91-.68 0-1.477-.345-2.063-.785l-.417-.32c-.145-.113-.42-.252-.68-.307-.515-.11-1.01.147-1.171.645-.032.097-.048.198-.016.3.065.414.42.653.817.915 1.4.98 2.863 1.353 4.491 1.353.785 0 1.569-.098 2.319-.196 1.25-.164 2.418-.485 3.52-.981.742-.33 1.445-.718 2.07-1.171.764-.555 1.445-1.205 2.016-1.954.47-.631.728-1.35.728-2.105 0-.621-.097-1.242-.318-1.823z" fill="#2496ED"/>
+                    </g>
+                    
+                    <!-- Jupyter Logo -->
+                    <g id="jupyter-logo">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22.5C6.201 22.5 1.5 17.799 1.5 12S6.201 1.5 12 1.5 22.5 6.201 22.5 12 17.799 22.5 12 22.5zm-.777-10.74l2.49-4.315a.5.5 0 0 1 .866 0l2.49 4.315a.5.5 0 0 1-.433.75h-4.98a.5.5 0 0 1-.433-.75z" fill="#F37626"/>
+                    </g>
+                    
+                    <!-- Power BI Logo -->
+                    <g id="powerbi-logo">
+                        <path d="M12.5 5.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-6-6a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill="#F2C811"/>
+                    </g>
+                    
+                    <!-- Excel Logo (Font Awesome) -->
+                    <g id="excel-logo">
+                        <path d="M21.21 0H7.79A1.79 1.79 0 0 0 6 1.79v20.42A1.79 1.79 0 0 0 7.79 24h13.42A1.79 1.79 0 0 0 23 22.21V1.79A1.79 1.79 0 0 0 21.21 0zM17.5 10.36l-2.14 3.57 2.26 3.75h-2.15l-1.32-2.2-1.32 2.2H11l2.26-3.75-2.14-3.57h2.15l1.2 2 1.2-2z" fill="#1D6F42"/>
+                    </g>
+                    
+                    <!-- Vercel Logo -->
+                    <g id="vercel-logo">
+                        <path d="M24 12.593c0-1.321-.988-2.4-2.205-2.4h-3.007c-.717 0-1.38.301-1.826.83L12 17.856l-4.962-6.833A2.205 2.205 0 0 0 5.212 10.193H2.205C.988 10.193 0 11.272 0 12.593c0 .36.095.697.26.984l6.175 8.434c.9 1.23 2.37 1.989 3.965 1.989s3.065-.759 3.965-1.989L20.74 13.577c.165-.287.26-.624.26-.984z" fill="#000"/>
+                    </g>
+                    
+                    <!-- Railway Logo -->
+                    <g id="railway-logo">
+                        <path d="M13.97 2.01L10.94 0l-2.87 4.96h2.87L13.97 2.01zM2.01 6.82l2.87 4.96h2.87L4.88 6.82H2.01zm5.74 0l2.87 4.96h2.87L10.62 6.82H7.75zm8.61 0v4.96h2.87l-2.87-4.96h-2.87z" fill="#0B0D0E"/>
+                    </g>
+                    
+                    <!-- GitHub Logo (Font Awesome) -->
+                    <g id="github-logo">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z" fill="#fff"/>
+                    </g>
+                    
+                    <!-- LangChain Logo -->
+                    <g id="langchain-logo">
+                        <path d="M12 0L1.608 6v12L12 24l10.392-6V6L12 0zm5.064 16.392L12 19.607l-5.064-3.215V7.608L12 4.393l5.064 3.215v8.784z" fill="#1C3C3C"/>
+                    </g>
+                    
+                    <!-- Hugging Face Logo -->
+                    <g id="huggingface-logo">
+                        <path d="M12.036 3L4.5 7.5v9l7.036 4.5L18.5 16.5v-9L12.036 3z" fill="#FFD21E"/>
+                    </g>
+                    
+                    <!-- Tailwind CSS Logo -->
+                    <g id="tailwind-logo">
+                        <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z" fill="#38BDF8"/>
+                    </g>
+                </defs>
+                
+                <!-- Curved Path -->
+                <path stroke-width="200" stroke-miterlimit="0" fill="none" id="text-path"
+                    d="M-98 194C260 326 450 318 770 294 1010 262 1200 182 1430 150 1530 134 1631 129 1718 202.8 1810 289 1810 438 1540 510 1190 606 810 470 430 550 251 590 140 670 160 790 192 910 308 917 410 926 530 934 620 918 790 886 943 854 1100 806 1240 790 1500 750 1720 774 2120 945" />
+
+                <!-- Animated Scrolling Text with Logos -->
+                <text class="ribbon__text">
+                    <textPath xlink:href="#text-path" startOffset="0%">
+                        <animate attributeName="startOffset" from="0%" to="-100%" dur="40s" repeatCount="indefinite" />
+                        
+                        <!-- Git -->
+                        <tspan>
+                            <use xlink:href="#git-logo" x="0" y="-15"/>
+                        </tspan>
+                        Git — 
+                        
+                        <!-- Docker -->
+                        <tspan>
+                            <use xlink:href="#docker-logo" x="0" y="-15"/>
+                        </tspan>
+                        Docker — 
+                        
+                        <!-- Jupyter -->
+                        <tspan>
+                            <use xlink:href="#jupyter-logo" x="0" y="-15"/>
+                        </tspan>
+                        Jupyter — 
+                        
+                        <!-- Power BI -->
+                        <tspan>
+                            <use xlink:href="#powerbi-logo" x="0" y="-15"/>
+                        </tspan>
+                        Power BI — 
+                        
+                        <!-- Excel -->
+                        <tspan>
+                            <use xlink:href="#excel-logo" x="0" y="-15"/>
+                        </tspan>
+                        Excel — 
+                        
+                        <!-- Vercel -->
+                        <tspan>
+                            <use xlink:href="#vercel-logo" x="0" y="-15"/>
+                        </tspan>
+                        Vercel — 
+                        
+                        <!-- Railway -->
+                        <tspan>
+                            <use xlink:href="#railway-logo" x="0" y="-15"/>
+                        </tspan>
+                        Railway — 
+                        
+                        <!-- GitHub Actions -->
+                        <tspan>
+                            <use xlink:href="#github-logo" x="0" y="-15"/>
+                        </tspan>
+                        GitHub Actions — 
+                        
+                        <!-- LangChain -->
+                        <tspan>
+                            <use xlink:href="#langchain-logo" x="0" y="-15"/>
+                        </tspan>
+                        LangChain — 
+                        
+                        <!-- Hugging Face -->
+                        <tspan>
+                            <use xlink:href="#huggingface-logo" x="0" y="-15"/>
+                        </tspan>
+                        Hugging Face — 
+                        
+                        <!-- Tailwind CSS -->
+                        <tspan>
+                            <use xlink:href="#tailwind-logo" x="0" y="-15"/>
+                        </tspan>
+                        Tailwind CSS — 
+                        
+                        <!-- Repeat for continuous effect -->
+                        <tspan>
+                            <use xlink:href="#git-logo" x="0" y="-15"/>
+                        </tspan>
+                        Git — 
+                        
+                        <tspan>
+                            <use xlink:href="#docker-logo" x="0" y="-15"/>
+                        </tspan>
+                        Docker — 
+                        
+                        <tspan>
+                            <use xlink:href="#jupyter-logo" x="0" y="-15"/>
+                        </tspan>
+                        Jupyter — 
+                        
+                        <tspan>
+                            <use xlink:href="#powerbi-logo" x="0" y="-15"/>
+                        </tspan>
+                        Power BI — 
+                        
+                        <tspan>
+                            <use xlink:href="#excel-logo" x="0" y="-15"/>
+                        </tspan>
+                        Excel — 
+                        
+                        <tspan>
+                            <use xlink:href="#vercel-logo" x="0" y="-15"/>
+                        </tspan>
+                        Vercel — 
+                        
+                        <tspan>
+                            <use xlink:href="#railway-logo" x="0" y="-15"/>
+                        </tspan>
+                        Railway — 
+                        
+                        <tspan>
+                            <use xlink:href="#github-logo" x="0" y="-15"/>
+                        </tspan>
+                        GitHub Actions — 
+                        
+                        <tspan>
+                            <use xlink:href="#langchain-logo" x="0" y="-15"/>
+                        </tspan>
+                        LangChain — 
+                        
+                        <tspan>
+                            <use xlink:href="#huggingface-logo" x="0" y="-15"/>
+                        </tspan>
+                        Hugging Face — 
+                        
+                        <tspan>
+                            <use xlink:href="#tailwind-logo" x="0" y="-15"/>
+                        </tspan>
+                        Tailwind CSS — 
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="achievements section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Achievements & Certifications</h2>
+                <p class="section-subtitle">Recognition and certifications that validate my expertise</p>
+            </div>
+            <div class="achievements-3d-container">
+                <input type="radio" name="achievement-slider" id="achievement-1" checked>
+                <input type="radio" name="achievement-slider" id="achievement-2">
+                <input type="radio" name="achievement-slider" id="achievement-3">
+                <input type="radio" name="achievement-slider" id="achievement-4">
+                <input type="radio" name="achievement-slider" id="achievement-5">
+                <input type="radio" name="achievement-slider" id="achievement-6">
+                <input type="radio" name="achievement-slider" id="achievement-7">
+                <input type="radio" name="achievement-slider" id="achievement-8">
+                <div class="achievements-cards-3d">
+                <label class="achievement-card-3d hackheaven-card" for="achievement-1" id="achievement-card-1">
+                    <h3>HackHeaven 2.0 Finalist</h3>
+                    <p>Participated in HackHeaven 2.0, a 24-hour hackathon organized by GDG on Campus – ABESEC. As part of Team The503Crew, developed "AI Toolkit", a plug-and-play developer tool for seamless AI integration, and secured a position among the Top 12 out of 200+ teams.</p>
+                    <div class="hackathon-gallery">
+                        <div class="gallery-item">
+                            <img src="assets/hack1.jpeg" alt="HackHeaven Hack1" class="hackathon-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="assets/hack2.jpeg" alt="HackHeaven Hack2" class="hackathon-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+                <label class="achievement-card-3d iitm-card" for="achievement-2" id="achievement-card-2">
+                    <h3>IIT Madras Certification</h3>
+                    <p>Foundational Level in Programming & Data Science (Sept 2024)</p>
+                    <div class="iitm-badges-section">
+                        <div class="badges-container">
+                            <img src="assets/badges_in_iitm.png" alt="IIT Madras Course Badges" class="badges-image">
+                            <div class="badges-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="badges-description">
+                            <p>Multiple subject badges earned throughout the course</p>
+                        </div>
+                    </div>
+                    <a href="assets/foundation_certificate_iitm.pdf" class="achievement-link" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        View Certificate
+                    </a>
+                </label>
+                <label class="achievement-card-3d ncc-card" for="achievement-3" id="achievement-card-3">
+                    <h3>NCC 'C' Certificate</h3>
+                    <p>C-Certificate Holder and Senior NCC Member from the inaugural NCC batch of ABES Engineering College, actively led cadet training, organized parades and social service drives, and guided new recruits.</p>
+                    <div class="ncc-gallery">
+                        <div class="gallery-item">
+                            <img src="assets/ncc-c%20certificate.jpeg" alt="NCC C Certificate" class="ncc-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="assets/ncc.jpeg" alt="NCC Training" class="ncc-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="assets/ncc1.jpeg" alt="NCC Activities" class="ncc-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ncc-details">
+                        <ul>
+                            <li><i class="fas fa-star"></i> C-Certificate Holder from inaugural NCC batch at ABES Engineering College</li>
+                            <li><i class="fas fa-users"></i> Senior NCC Member who actively led cadet training sessions</li>
+                            <li><i class="fas fa-flag"></i> Organized and participated in college parades and ceremonial events</li>
+                            <li><i class="fas fa-shield-alt"></i> Guard of Honour Trainee with advanced drill and ceremonial training</li>
+                            <li><i class="fas fa-hands-helping"></i> Led social service drives and community outreach programs</li>
+                            <li><i class="fas fa-user-graduate"></i> Mentored and guided new recruits in NCC protocols and training</li>
+                        </ul>
+                    </div>
+                </label>
+                <label class="achievement-card-3d" for="achievement-4" id="achievement-card-4">
+                    <h3>Paranox 2.0 Hackathon Finalist</h3>
+                    <p>Rising among 1500+ teams at Paranox 2.0 Hackathon through intense 30-hour collaborative teamwork, showcasing innovation and problem-solving excellence</p>
+                    <div class="hackathon-gallery">
+                        <div class="gallery-item">
+                            <img src="assets/1763550705080.jpeg" alt="Paranox 2.0 Hackathon 1" class="hackathon-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="assets/1763550705112.jpeg" alt="Paranox 2.0 Hackathon 2" class="hackathon-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="assets/1763550716186.jpeg" alt="Paranox 2.0 Hackathon 3" class="hackathon-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="assets/1763550717023.jpeg" alt="Paranox 2.0 Hackathon 4" class="hackathon-image">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+                <label class="achievement-card-3d" for="achievement-5" id="achievement-card-5">
+                    <h3>300+ Problems Solved</h3>
+                    <p>Across multiple coding platforms: LeetCode, GeeksforGeeks, CodeChef, HackerRank</p>
+                </label>
+                <label class="achievement-card-3d" for="achievement-6" id="achievement-card-6">
+                    <h3>Top 25% Kaggle</h3>
+                    <p>Consistent performance in multiple Kaggle competitions across various domains including regression, classification, and NLP</p>
+                </label>
+                <label class="achievement-card-3d" for="achievement-7" id="achievement-card-7">
+                    <h3>C++ Programming Certification</h3>
+                    <p>Beginner to Advance — Deep Dive with C++11, Exception Handling & STL</p>
+                </label>
+                </div>
+                <div class="achievement-navigation-dots">
+                    <label for="achievement-1" class="nav-dot"></label>
+                    <label for="achievement-2" class="nav-dot"></label>
+                    <label for="achievement-3" class="nav-dot"></label>
+                    <label for="achievement-4" class="nav-dot"></label>
+                    <label for="achievement-5" class="nav-dot"></label>
+                    <label for="achievement-6" class="nav-dot"></label>
+                    <label for="achievement-7" class="nav-dot"></label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Let's collaborate and build something amazing together</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-card">
+                        <h3>Let's Connect!</h3>
+                        <p>I'm always open to discussing new opportunities, innovative projects, or just having a chat about technology and data science.</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <span>Email</span>
+                                    <a href="mailto:dewanggandhi2@gmail.com">dewanggandhi2@gmail.com</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-whatsapp"></i>
+                                <div>
+                                    <span>WhatsApp</span>
+                                    <a href="https://wa.me/+919411654775" target="_blank">+91 9411654775</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <span>Phone</span>
+                                    <a href="tel:+919411654775">+91 9411654775</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-file-pdf"></i>
+                                <div>
+                                    <span>Resume</span>
+                                    <a href="assets/Dewang Gandhi Resume.pdf" target="_blank" download>Download PDF</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-linkedin"></i>
+                                <div>
+                                    <span>LinkedIn</span>
+                                    <a href="https://linkedin.com/in/dewang-gandhi-21323b331" target="_blank">dewang-gandhi-21323b331</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <svg class="x-logo-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                                <div>
+                                    <span>X (Twitter)</span>
+                                    <a href="https://x.com/dewang__gandhi" target="_blank">@dewang__gandhi</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-github"></i>
+                                <div>
+                                    <span>GitHub</span>
+                                    <a href="https://github.com/dewanggandhi01" target="_blank">dewanggandhi01</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-social">
+                    <ul class="social-icons-enhanced footer-social-icons">
+                        <li>
+                            <a href="https://wa.me/+919411654775" target="_blank" title="WhatsApp">
+                                <i class="fab fa-whatsapp icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://linkedin.com/in/dewang-gandhi-21323b331" target="_blank" title="LinkedIn">
+                                <i class="fab fa-linkedin-in icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://x.com/dewang__gandhi" target="_blank" title="X (Twitter)">
+                                <svg class="x-logo-svg icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/dewanggandhi01" target="_blank" title="GitHub">
+                                <i class="fab fa-github icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://leetcode.com/dewang_gandhi01" target="_blank" title="LeetCode">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="leetcode-svg icon">
+                                    <title>LeetCode</title>
+                                    <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:dewanggandhi2@gmail.com" title="Email">
+                                <i class="fas fa-envelope icon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body">
+                <!-- Modal content will be dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="js/particles-hero.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
