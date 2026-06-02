@@ -463,7 +463,7 @@ function generateProjectCards() {
 function getCategoryName(category) {
     const categoryNames = {
         'ai': 'AI/ML',
-        'web': 'Web Dev',
+        'web': 'Full-Stack',
         'data': 'Data Science',
         'automation': 'Automation'
     };

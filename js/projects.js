@@ -232,6 +232,122 @@ const projectsData = [
       demo: "#"
     },
     year: "2025"
+  },
+  {
+    id: 8,
+    title: "SwiftShare",
+    category: "web",
+    tech: "Node.js, Express, Socket.IO, HTML/CSS/JS",
+    description: "Full-stack zero-signup platform combining file sharing, PDF tools, real-time chat, language translation, media discovery, and multiplayer games.",
+    longDescription: `
+      <p>A full-stack web application that combines file sharing, PDF tooling, real-time chat, language translation, media discovery, and multiplayer games into a single, zero-signup platform. Built with Node.js, Express, and Socket.IO on the backend, with a vanilla HTML/CSS/JS frontend — no framework overhead, no build step.</p>
+      
+      <h4>Key Features:</h4>
+      <ul>
+        <li>Instant file sharing with no sign-up required</li>
+        <li>Built-in PDF tooling — merge, split, compress, and convert</li>
+        <li>Real-time chat powered by Socket.IO for live communication</li>
+        <li>Language translation for cross-lingual collaboration</li>
+        <li>Media discovery for finding and sharing content</li>
+        <li>Multiplayer games for interactive engagement</li>
+        <li>Zero framework overhead — vanilla HTML/CSS/JS frontend</li>
+      </ul>
+      
+      <h4>Technical Architecture:</h4>
+      <ul>
+        <li><strong>Backend:</strong> Node.js + Express for server-side logic and API routing</li>
+        <li><strong>Real-time:</strong> Socket.IO for WebSocket-based live communication</li>
+        <li><strong>Frontend:</strong> Vanilla HTML/CSS/JS — no build step, no framework dependency</li>
+        <li>Designed for simplicity, speed, and instant accessibility</li>
+      </ul>
+      
+      <h4>Impact:</h4>
+      <p>Eliminates friction by providing an all-in-one utility platform that users can access instantly without creating accounts or installing software.</p>
+    `,
+    tags: ["Node.js", "Express", "Socket.IO", "Real-time", "Full-Stack"],
+    links: {
+      github: "https://github.com/dewanggandhi01/SwiftShare",
+      demo: "https://swiftshare-rwio.onrender.com"
+    },
+    year: "2025"
+  },
+  {
+    id: 9,
+    title: "CurePath — Digital Prescription Management",
+    category: "web",
+    tech: "Next.js 16, React 19, TypeScript",
+    description: "Full-stack healthcare platform for digital prescription management with role-based access, PDF generation, and responsive design.",
+    longDescription: `
+      <p>CurePath is a full-stack web application built to solve a real problem in healthcare: patients lose physical prescriptions, and clinics struggle to maintain organized prescription records. This platform allows doctors to create, manage, and track digital prescriptions while giving patients secure, on-demand access to their prescription history and medical records.</p>
+      
+      <h4>Key Features:</h4>
+      <ul>
+        <li>Role-based access control — separate interfaces for doctors and patients</li>
+        <li>Digital prescription creation and management workflow</li>
+        <li>Client-side PDF generation for downloadable prescriptions</li>
+        <li>Animated UI transitions for a polished user experience</li>
+        <li>Responsive design system that adapts from mobile to desktop</li>
+        <li>Secure, on-demand access to prescription history and medical records</li>
+      </ul>
+      
+      <h4>Technical Architecture:</h4>
+      <ul>
+        <li><strong>Framework:</strong> Next.js 16 with React 19 and TypeScript</li>
+        <li><strong>Architecture:</strong> Modern frontend patterns with server-side rendering</li>
+        <li><strong>Auth:</strong> Role-based access control for doctors and patients</li>
+        <li><strong>PDF:</strong> Client-side PDF generation for prescription downloads</li>
+        <li><strong>Design:</strong> Responsive design system with animated transitions</li>
+      </ul>
+      
+      <h4>Impact:</h4>
+      <p>Digitizes the prescription workflow, reducing lost prescriptions and enabling clinics to maintain organized, searchable medical records with secure patient access.</p>
+    `,
+    tags: ["Next.js", "React", "TypeScript", "Healthcare", "Full-Stack"],
+    links: {
+      github: "https://github.com/dewanggandhi01/CurePath",
+      demo: "https://cure-path.vercel.app"
+    },
+    year: "2025"
+  },
+  {
+    id: 10,
+    title: "AlgoVerse — DSA Learning Platform",
+    category: "web",
+    tech: "React, TypeScript, Node.js",
+    description: "Comprehensive DSA learning platform with 500+ curated problems, video solutions, 16-level study paths, and company-specific interview prep.",
+    longDescription: `
+      <p>AlgoVerse is a comprehensive Data Structures and Algorithms learning platform with video solutions, structured learning paths, and 500+ curated problems designed to take learners from beginner to advanced.</p>
+      
+      <h4>Core Features:</h4>
+      <ul>
+        <li><strong>500+ DSA Problems</strong> — Curated collection covering all major topics</li>
+        <li><strong>Video Solutions</strong> — YouTube video integration for visual learning (8 videos per problem)</li>
+        <li><strong>Study Flow</strong> — 16-level structured learning roadmap from beginner to advanced</li>
+        <li><strong>Multiple Solutions</strong> — Different approaches for each problem (Brute Force, Optimal, etc.)</li>
+        <li><strong>Smart Filtering</strong> — Filter by difficulty, topic, tags, and categories</li>
+        <li><strong>Interview Prep</strong> — Company-specific problems (FAANG companies)</li>
+        <li><strong>Dark Mode</strong> — Eye-friendly dark theme support</li>
+        <li><strong>Progress Tracking</strong> — Track your learning journey across all problems</li>
+        <li><strong>Responsive Design</strong> — Works seamlessly on all devices</li>
+      </ul>
+      
+      <h4>Technical Implementation:</h4>
+      <ul>
+        <li><strong>Frontend:</strong> React with TypeScript for type-safe component architecture</li>
+        <li><strong>Backend:</strong> Node.js for API services and data management</li>
+        <li><strong>State:</strong> Efficient state management for progress tracking across 500+ problems</li>
+        <li><strong>Design:</strong> Responsive layout with dark mode support and smart filtering UX</li>
+      </ul>
+      
+      <h4>Impact:</h4>
+      <p>Provides a structured, all-in-one platform for DSA mastery — combining curated problems, video explanations, and progress tracking to accelerate interview preparation and algorithmic thinking.</p>
+    `,
+    tags: ["React", "TypeScript", "Node.js", "Education", "DSA"],
+    links: {
+      github: "https://github.com/dewanggandhi01/AlgoVerse",
+      demo: "https://algo-verse-nine.vercel.app"
+    },
+    year: "2025"
   }
 ];
 
