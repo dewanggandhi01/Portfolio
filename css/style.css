@@ -1834,6 +1834,73 @@ section.focus .section-title {
   }
 }
 
+/* ===== TIMELINE SLIDE ANIMATIONS ===== */
+/* Odd items (left side) - slide in from left with scale */
+.timeline-item:nth-child(odd) .timeline-card {
+  transform-origin: right center;
+}
+
+/* Even items (right side) - slide in from right with scale */
+.timeline-item:nth-child(even) .timeline-card {
+  transform-origin: left center;
+}
+
+/* Scale + slide effect on cards when AOS triggers */
+.timeline-item .timeline-card {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.timeline-item:nth-child(odd) .timeline-card {
+  transform: scale(0.85) translateX(-40px);
+}
+
+.timeline-item:nth-child(even) .timeline-card {
+  transform: scale(0.85) translateX(40px);
+}
+
+/* When AOS marks the item as animated */
+.timeline-item.aos-animate .timeline-card {
+  opacity: 1;
+  transform: scale(1) translateX(0);
+}
+
+/* Timeline marker pop-in animation */
+.timeline-item .timeline-marker {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s,
+              transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
+}
+
+.timeline-item:nth-child(odd) .timeline-marker {
+  right: -30px;
+}
+
+.timeline-item:nth-child(even) .timeline-marker {
+  left: -30px;
+}
+
+.timeline-item.aos-animate .timeline-marker {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Mobile: all items slide from left */
+@media (max-width: 768px) {
+  .timeline-item:nth-child(odd) .timeline-card,
+  .timeline-item:nth-child(even) .timeline-card {
+    transform-origin: left center;
+    transform: scale(0.85) translateX(-40px);
+  }
+
+  .timeline-item.aos-animate .timeline-card {
+    transform: scale(1) translateX(0);
+  }
+}
+
 /* ===== PROJECTS SECTION ===== */
 .projects-filter {
   display: flex;
