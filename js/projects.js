@@ -235,10 +235,11 @@ const projectsData = [
   },
   {
     id: 8,
-    title: "SwiftShare",
+    title: "SwiftShare (DΞBO)",
     category: "web",
     tech: "Node.js, Express, Socket.IO, HTML/CSS/JS",
     description: "Full-stack zero-signup platform combining file sharing, PDF tools, real-time chat, language translation, media discovery, and multiplayer games.",
+    image: "assets/swiftshare.png",
     longDescription: `
       <p>A full-stack web application that combines file sharing, PDF tooling, real-time chat, language translation, media discovery, and multiplayer games into a single, zero-signup platform. Built with Node.js, Express, and Socket.IO on the backend, with a vanilla HTML/CSS/JS frontend — no framework overhead, no build step.</p>
       
@@ -269,6 +270,7 @@ const projectsData = [
       github: "https://github.com/dewanggandhi01/SwiftShare",
       demo: "https://swiftshare-rwio.onrender.com"
     },
+    year: "2025"
   },
   {
     id: 9,
