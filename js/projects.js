@@ -269,7 +269,6 @@ const projectsData = [
       github: "https://github.com/dewanggandhi01/SwiftShare",
       demo: "https://swiftshare-rwio.onrender.com"
     },
-    year: "2025"
   },
   {
     id: 9,
@@ -277,6 +276,7 @@ const projectsData = [
     category: "web",
     tech: "Next.js 16, React 19, TypeScript",
     description: "Full-stack healthcare platform for digital prescription management with role-based access, PDF generation, and responsive design.",
+    image: "assets/curepath.png",
     longDescription: `
       <p>CurePath is a full-stack web application built to solve a real problem in healthcare: patients lose physical prescriptions, and clinics struggle to maintain organized prescription records. This platform allows doctors to create, manage, and track digital prescriptions while giving patients secure, on-demand access to their prescription history and medical records.</p>
       
