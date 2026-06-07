@@ -348,6 +348,71 @@ const projectsData = [
       demo: "https://algo-verse-nine.vercel.app"
     },
     year: "2025"
+  },
+  {
+    id: 11,
+    title: "FlowCompiler — AI Application Compiler",
+    category: "ai",
+    tech: "Next.js 15, FastAPI, LangGraph, LangChain, PostgreSQL, OpenAI (GPT-4o)",
+    description: "Production-grade AI system that converts natural language software requirements into complete, executable application configurations.",
+    image: "assets/flowcompiler.jpg",
+    longDescription: `
+      <p>FlowCompiler behaves like a compiler for software applications: you provide a natural language description of what you want to build, and it generates production-ready UI, API, Database, and Auth schemas — validated, repaired, and simulation-tested.</p>
+      
+      <div style="background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <div style="color: #F87171; font-family: monospace; font-size: 0.9rem; margin-bottom: 0.5rem; text-align: left;">INPUT PROMPT:</div>
+        <p style="font-style: italic; margin-bottom: 1rem; text-align: left;">"Build a CRM with login, contacts, dashboard, role-based access, payments, and analytics."</p>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+          <div style="font-weight: bold; color: #b8d8d8;">↓ COMPILER PIPELINE</div>
+          <div style="font-family: monospace; font-size: 0.85rem; border-left: 2px solid #b8d8d8; padding-left: 1rem; width: 100%; margin: 0.5rem 0; text-align: left; line-height: 1.5;">
+            1. Intent Extraction<br>
+            2. System Design<br>
+            3. Schema Generation (UI/API/DB/Auth)<br>
+            4. Cross-Layer Validation<br>
+            5. Targeted Repair Engine<br>
+            6. Runtime Simulation
+          </div>
+          <div style="font-weight: bold; color: #b8d8d8;">↓ OUTPUT</div>
+          <div style="color: #34D399; font-family: monospace; font-size: 0.9rem;">Executable Configuration (JSON)</div>
+        </div>
+      </div>
+
+      <h4>🏗️ Architecture Overview:</h4>
+      <pre style="background: rgba(0, 0, 0, 0.3); padding: 1rem; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 0.85rem; line-height: 1.4; border: 1px solid rgba(255, 255, 255, 0.05); text-align: left;">src/
+├── api/                    # FastAPI routes
+│   └── routes.py
+├── agents/                 # AI pipeline agents
+│   ├── base_agent.py       # Abstract base with retry/structured outputs
+│   ├── intent_extractor.py # Stage 1: NL → structured intent
+│   ├── system_designer.py  # Stage 2: Intent → architecture
+│   ├── schema_generator.py # Stage 3: Architecture → 4 schemas
+│   ├── validator.py        # Stage 4: Cross-layer validation
+│   ├── repair_agent.py     # Stage 5: Targeted repair engine
+│   ├── execution_simulator.py # Stage 6: Runtime simulation
+│   └── pipeline.py         # LangGraph orchestrator
+├── schemas/                # Pydantic v2 models
+├── runtime/                # Config → executable code generators
+├── evaluation/             # Benchmark framework
+└── tests/                  # Test suite</pre>
+
+      <h4>📡 API Reference:</h4>
+      <ul style="text-align: left;">
+        <li><code>POST /generate</code> - Full pipeline execution from prompt to runtime config.</li>
+        <li><code>POST /validate</code> - Validate existing schemas across all four layers.</li>
+        <li><code>POST /repair</code> - Repair failing schemas with targeted fixes.</li>
+        <li><code>POST /simulate</code> - Run execution simulation on generated schemas.</li>
+        <li><code>POST /evaluate</code> - Run the 20-prompt benchmark suite with metrics.</li>
+      </ul>
+
+      <h4>📊 Evaluation & Benchmarks:</h4>
+      <p style="text-align: left;">Includes a 20-prompt benchmark suite (10 normal + 10 edge cases) testing various domains (CRM, ERP, LMS, Booking, etc.) with ambiguous, contradictory, minimal, or overly complex inputs. Tracks success rate, validation failures, repair count, runtime pass rate, latency, and cost.</p>
+    `,
+    tags: ["Next.js", "FastAPI", "LangGraph", "LangChain", "OpenAI", "Full-Stack"],
+    links: {
+      github: "https://github.com/dewanggandhi01/FlowCompiler",
+      demo: "https://flow-compiler-three.vercel.app/"
+    },
+    year: "2025"
   }
 ];
 

@@ -2358,6 +2358,34 @@ section.focus .section-title {
   box-shadow: var(--shadow-lg);
 }
 
+/* ===== PROJECT CARD IMAGE STYLING ===== */
+.project-image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border-color);
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.project-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-card:hover .project-card-image {
+  transform: scale(1.05);
+}
+
+.project-card .project-image-container + .project-header {
+  padding-top: 1rem;
+}
+
 /* ===== SKILLS SECTION ===== */
 .skills {
   background: var(--bg-secondary);

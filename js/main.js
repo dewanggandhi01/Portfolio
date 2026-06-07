@@ -430,6 +430,13 @@ function generateProjectCards() {
         projectCard.setAttribute('data-aos-delay', (index * 100).toString());
         
         projectCard.innerHTML = `
+            ${project.image ? `
+            <div class="project-image-container">
+                <a href="${project.links.demo !== '#' ? project.links.demo : '#'}" target="_blank">
+                    <img src="${project.image}" alt="${project.title}" class="project-card-image">
+                </a>
+            </div>
+            ` : ''}
             <div class="project-header">
                 <div class="project-category">${getCategoryName(project.category)}</div>
                 <h3 class="project-title">${project.title}</h3>
