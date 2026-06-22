@@ -1,5 +1,8 @@
 // Main JavaScript file for portfolio functionality
 
+let currentGalleryPaintings = [];
+let currentPaintingIndex = -1;
+
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function() {
     initializePortfolio();
@@ -13,9 +16,8 @@ function initializePortfolio() {
     initTypingEffect();
     initScrollAnimations();
     initParticles();
-    initSkillBars();
+    initSkillsEcosystem();
     initStatsCounter();
-    initProjectsFilter();
     initContactForm();
     initThemeToggle();
     initBackToTop();
@@ -38,6 +40,11 @@ function initPreloader() {
     const preloader = document.getElementById('preloader');
     
     window.addEventListener('load', function() {
+        // Refresh ScrollTrigger calculations after all assets are loaded
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
+        }
+        
         // Wait for growing animation to complete at least one full cycle (4.5s)
         setTimeout(() => {
             preloader.classList.add('fade-out');
@@ -110,18 +117,26 @@ function initNavigation() {
         });
     });
 
-    // Progress bar and scroll effects
-    window.addEventListener('scroll', function() {
-        const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    function handleScroll() {
+        const scrollTop = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+        const scrolled = (scrollTop / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
         progressBar.style.width = scrolled + '%';
         
         // Navbar scroll effect  
-        if (window.scrollY > 50) {
+        if (scrollTop > 50) {
             navbar.classList.add('scrolled');
+            navbar.classList.add('hidden');
         } else {
             navbar.classList.remove('scrolled');
+            navbar.classList.remove('hidden');
         }
-    });
+    }
+
+    // Progress bar and scroll effects
+    window.addEventListener('scroll', handleScroll);
+    
+    // Call immediately to set correct initial state
+    handleScroll();
 
     // Update active navigation on scroll (ScrollSpy)
     window.addEventListener('scroll', updateActiveNavigation);
@@ -343,24 +358,162 @@ function initParticles() {
     }
 }
 
-// Skills bar animation
-function initSkillBars() {
-    const skillBars = document.querySelectorAll('.skill-progress');
-    
-    const skillObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const skillBar = entry.target;
-                const width = skillBar.getAttribute('data-width');
-                
-                setTimeout(() => {
-                    skillBar.style.width = width;
-                }, 200);
+// ==========================================
+// TECHNOLOGY STACK RIBBON SCROLLING (GSAP Marquee)
+// ==========================================
+
+let techMarqueeTimeline = null;
+let spotlightInterval = null;
+
+function initSkillsEcosystem() {
+    const section = document.querySelector('.skills-ribbon-section');
+    if (!section) return;
+
+    const container = section.querySelector('.tech-ribbon-container');
+    const track = section.querySelector('.tech-ribbon-track');
+    if (!container || !track) return;
+
+    // Reset timelines/intervals if re-initializing
+    if (techMarqueeTimeline) {
+        techMarqueeTimeline.kill();
+    }
+    if (spotlightInterval) {
+        clearInterval(spotlightInterval);
+    }
+
+
+    // GSAP ScrollTrigger Entrance Animation for Ribbon Strip
+    gsap.from(container, {
+        scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 50,
+        duration: 1.5,
+        ease: 'power3.out'
+    });
+
+    // Infinite Marquee horizontal loop: slides track left by 50% (exactly half width, since HTML list is duplicated)
+    // Runs right-to-left
+    techMarqueeTimeline = gsap.to(track, {
+        xPercent: -50,
+        ease: "none",
+        duration: 38, // slow luxury speed
+        repeat: -1
+    });
+
+    // Pause horizontal marquee scrolling when hovering anywhere on the ribbon
+    container.addEventListener('mouseenter', () => {
+        gsap.to(techMarqueeTimeline, { timeScale: 0.15, duration: 1.0, ease: "power2.out" }); // gently decelerate
+    });
+    container.addEventListener('mouseleave', () => {
+        gsap.to(techMarqueeTimeline, { timeScale: 1.0, duration: 1.0, ease: "power2.out" }); // gently accelerate back
+    });
+
+    // Featured Spotlight highlighting effect
+    spotlightInterval = setInterval(() => {
+        const items = Array.from(track.querySelectorAll('.tech-ribbon-item'));
+        if (items.length === 0) return;
+
+        // Pick elements that are visible and not currently hovered
+        const visibleItems = items.filter(item => {
+            const rect = item.getBoundingClientRect();
+            return rect.left >= 0 && rect.right <= window.innerWidth && !item.matches(':hover');
+        });
+
+        const activePool = visibleItems.length > 0 ? visibleItems : items;
+        const randomItem = activePool[Math.floor(Math.random() * activePool.length)];
+
+        // Run spotlight fade/scale animation
+        gsap.to(randomItem, {
+            opacity: 1,
+            scale: 1.1,
+            duration: 1.0,
+            yoyo: true,
+            repeat: 1,
+            ease: "power2.inOut",
+            onComplete: () => {
+                // Ensure we return cleanly to standard styles
+                gsap.set(randomItem, { clearProps: "opacity,scale" });
             }
         });
-    }, { threshold: 0.5 });
-    
-    skillBars.forEach(bar => skillObserver.observe(bar));
+    }, 4500);
+
+    // Run background particles
+    initEcosystemParticles();
+}
+
+// Canvas particle animation in skills section background
+function initEcosystemParticles() {
+    const canvas = document.getElementById('ecosystemParticles');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = canvas.offsetWidth;
+    let height = canvas.height = canvas.offsetHeight;
+
+    const particles = [];
+    const particleCount = Math.min(50, Math.floor((width * height) / 30000));
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.size = Math.random() * 1.5 + 0.5;
+            this.speedX = Math.random() * 0.3 - 0.15;
+            this.speedY = Math.random() * 0.3 - 0.15;
+            this.opacity = Math.random() * 0.4 + 0.1;
+            this.baseOpacity = this.opacity;
+            this.fadeSpeed = Math.random() * 0.005 + 0.002;
+            this.fadeDir = 1;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x < 0) this.x = width;
+            if (this.x > width) this.x = 0;
+            if (this.y < 0) this.y = height;
+            if (this.y > height) this.y = 0;
+
+            this.opacity += this.fadeDir * this.fadeSpeed;
+            if (this.opacity > this.baseOpacity * 1.5 || this.opacity > 0.7) {
+                this.fadeDir = -1;
+            } else if (this.opacity < this.baseOpacity * 0.5 || this.opacity < 0.05) {
+                this.fadeDir = 1;
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+    });
 }
 
 // Stats counter animation
@@ -394,69 +547,258 @@ function initStatsCounter() {
     statNumbers.forEach(stat => statsObserver.observe(stat));
 }
 
-// Projects filter functionality
+// Projects filter functionality (Awwwards Fullscreen Scroll Showcase)
 function initProjectsFilter() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projectsGrid = document.getElementById('projects-grid');
-    
-    // Generate project cards
-    generateProjectCards();
-    
-    // Filter functionality
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Update active button
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Filter projects
-            const filter = this.getAttribute('data-filter');
-            filterProjects(filter);
-        });
+    generateTrackProjects();
+    initProjectsScrollTimeline();
+}
+
+// Populate project cards inside the horizontal tracks dynamically
+function generateTrackProjects() {
+    const tracks = {
+        'engineering': document.getElementById('track-engineering'),
+        'ai': document.getElementById('track-ai'),
+        'creative': document.getElementById('track-creative'),
+        'content': document.getElementById('track-content')
+    };
+
+    const categoryMapping = {
+        'engineering': p => p.category === 'web' || p.category === 'automation',
+        'ai': p => p.category === 'ai' || p.category === 'data',
+        'creative': p => p.category === 'creative',
+        'content': p => p.category === 'art'
+    };
+
+    Object.keys(tracks).forEach(cat => {
+        const trackEl = tracks[cat];
+        if (!trackEl) return;
+
+        // Save and restore the header element
+        const header = trackEl.querySelector('.track-header');
+        trackEl.innerHTML = '';
+        if (header) {
+            trackEl.appendChild(header);
+        }
+
+        const filtered = projectsData.filter(categoryMapping[cat]);
+        
+        if (cat === 'content') {
+            // Populate global array for gallery modal slideshow navigation
+            currentGalleryPaintings = filtered;
+
+            // Render Art Exhibition paintings with masonry collage styling
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                const gridClass = project.gridClass || 'painting-card-normal';
+                card.className = `painting-track-card ${gridClass}`;
+                card.setAttribute('data-project-id', project.id);
+                card.innerHTML = `
+                    <img src="${project.image}" alt="${project.title}" loading="lazy">
+                    <div class="painting-card-overlay">
+                        <span class="painting-overlay-title">${project.title}</span>
+                        <span class="painting-overlay-medium">${project.tech}</span>
+                    </div>
+                `;
+                
+                // Add load handler to this image to refresh ScrollTrigger calculations once the image loads
+                const img = card.querySelector('img');
+                if (img) {
+                    img.addEventListener('load', function() {
+                        if (typeof ScrollTrigger !== 'undefined') {
+                            ScrollTrigger.refresh();
+                        }
+                    });
+                }
+                
+                trackEl.appendChild(card);
+            });
+
+
+        } else {
+            // Standard projects cards
+            filtered.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'project-track-card';
+                card.innerHTML = `
+                    <div class="track-card-header">
+                        <span class="track-card-tech">${project.tech}</span>
+                        <h4 class="track-card-title">${project.title}</h4>
+                    </div>
+                    <p class="track-card-desc">${project.description}</p>
+                    <div class="track-card-links">
+                        ${project.links.github && project.links.github !== '#' ? `
+                        <a href="${project.links.github}" class="track-card-link" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        ` : ''}
+                        ${project.links.demo && project.links.demo !== '#' ? `
+                        <a href="${project.links.demo}" class="track-card-link" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Demo
+                        </a>
+                        ` : ''}
+                        <button class="track-card-btn view-details" data-project-id="${project.id}">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                `;
+                trackEl.appendChild(card);
+            });
+
+            // Click handler for details buttons
+            trackEl.querySelectorAll('.view-details').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const pid = parseInt(this.getAttribute('data-project-id'));
+                    showProjectModal(pid);
+                });
+            });
+        }
     });
 }
 
-function generateProjectCards() {
-    const projectsGrid = document.getElementById('projects-grid');
-    
-    if (!projectsData || !projectsGrid) return;
-    
-    projectsGrid.innerHTML = '';
-    
-    projectsData.forEach((project, index) => {
-        const projectCard = document.createElement('div');
-        projectCard.className = `project-card ${project.category}`;
-        projectCard.setAttribute('data-aos', 'fade-up');
-        projectCard.setAttribute('data-aos-delay', (index * 100).toString());
-        
-        projectCard.innerHTML = `
-            <div class="project-header">
-                <div class="project-category">${getCategoryName(project.category)}</div>
-                <h3 class="project-title">${project.title}</h3>
-                <div class="project-tech">${project.tech}</div>
-                <p class="project-description">${project.description}</p>
-            </div>
-            <div class="project-links">
-                <a href="${project.links.github}" class="project-link" target="_blank">
-                    <i class="fab fa-github"></i>
-                    GitHub
-                </a>
-                <button class="project-link view-details" data-project-id="${project.id}">
-                    <i class="fas fa-info-circle"></i>
-                    Details
-                </button>
-            </div>
-        `;
-        
-        projectsGrid.appendChild(projectCard);
+// Setup the GSAP ScrollTrigger timeline for the scroll-driven projects section
+function initProjectsScrollTimeline() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        console.error('GSAP or ScrollTrigger is not loaded');
+        return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const categories = ['engineering', 'ai', 'creative', 'content'];
+
+    // Main scroll trigger timeline for projects showcase
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.projects-section',
+            start: 'top top',
+            end: '+=1000%', // Slower and smoother scroll speed for cards and showcase navigation
+            pin: true,
+            scrub: 1.2,
+            anticipatePin: 1,
+            invalidateOnRefresh: true
+        }
     });
-    
-    // Add click handlers for detail buttons
-    document.querySelectorAll('.view-details').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const projectId = parseInt(this.getAttribute('data-project-id'));
-            showProjectModal(projectId);
-        });
+
+    // Add a starting buffer so the section pins and remains in grid state for a short scroll distance
+    // before the first category card starts expanding
+    tl.to({}, { duration: 0.5 });
+
+    categories.forEach((catKey, idx) => {
+        const panel = document.getElementById(`panel-${catKey}`);
+        const track = document.getElementById(`track-${catKey}`);
+        if (!panel || !track) return;
+
+        const labelName = `stage_${catKey}`;
+        const isContent = (catKey === 'content');
+
+        // 1. Expand active card to fullscreen, fade others
+        tl.to(`.projects-grid .project-card:not([data-category="${catKey}"])`, {
+            opacity: 0,
+            y: -30,
+            duration: 0.8,
+            ease: 'power2.out'
+        }, labelName)
+        .to('.projects-right', {
+            opacity: 0,
+            y: -30,
+            duration: 0.8,
+            ease: 'power2.out'
+        }, labelName)
+        .to(`.projects-grid .project-card[data-category="${catKey}"]`, {
+            scale: 3,
+            borderRadius: 0,
+            opacity: 0,
+            zIndex: 200, // Elevate active card above the fullscreen panel during expand transition
+            duration: 1.0,
+            ease: 'power2.inOut'
+        }, labelName)
+        .fromTo(panel, {
+            opacity: 0,
+            scale: 0.95,
+            display: 'none',
+            pointerEvents: 'none'
+        }, {
+            opacity: 1,
+            scale: 1,
+            display: isContent ? 'block' : 'flex',
+            pointerEvents: 'auto',
+            duration: 1.0,
+            ease: 'power2.inOut'
+        }, labelName);
+
+        // Add stagger reveal entrance animation for paintings in content category
+        if (isContent) {
+            tl.fromTo('#track-content .painting-track-card', {
+                opacity: 0,
+                y: 50
+            }, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.08,
+                duration: 0.8,
+                ease: 'power2.out'
+            }, `${labelName}+=0.2`);
+        }
+
+        // 2. Scroll translation for this panel
+        if (isContent) {
+            // Vertical scroll for masonry gallery wall
+            tl.to(track, {
+                y: () => {
+                    const scrollAmount = track.scrollHeight - window.innerHeight;
+                    return -Math.max(0, scrollAmount + 80); // Include some bottom padding space
+                },
+                ease: 'none',
+                duration: 2.5
+            });
+        } else {
+            // Horizontal scroll for card carousels
+            tl.to(track, {
+                x: () => {
+                    const scrollAmount = track.scrollWidth - window.innerWidth;
+                    return -Math.max(0, scrollAmount);
+                },
+                ease: 'none',
+                duration: 2.5
+            });
+        }
+
+        // 3. Collapse panel back to grid
+        const outLabel = `stage_${catKey}_out`;
+        tl.to(panel, {
+            opacity: 0,
+            scale: 0.95,
+            display: 'none',
+            pointerEvents: 'none',
+            duration: 1.0,
+            ease: 'power2.inOut'
+        }, outLabel)
+        .to(`.projects-grid .project-card[data-category="${catKey}"]`, {
+            scale: 1,
+            borderRadius: '8px',
+            opacity: 1,
+            zIndex: 3, // Restore original z-index
+            duration: 1.0,
+            ease: 'power2.inOut'
+        }, outLabel)
+        .to(`.projects-grid .project-card:not([data-category="${catKey}"])`, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out'
+        }, outLabel)
+        .to('.projects-right', {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out'
+        }, outLabel);
+
+        // Add a small spacer delay between stages (except the last one)
+        if (idx < categories.length - 1) {
+            tl.to({}, { duration: 0.5 });
+        }
     });
 }
 
@@ -465,23 +807,11 @@ function getCategoryName(category) {
         'ai': 'AI/ML',
         'web': 'Full-Stack',
         'data': 'Data Science',
-        'automation': 'Automation'
+        'automation': 'Automation',
+        'creative': 'Creative Work',
+        'content': 'Content Creation'
     };
     return categoryNames[category] || category.toUpperCase();
-}
-
-function filterProjects(filter) {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        if (filter === 'all' || card.classList.contains(filter)) {
-            card.style.display = 'block';
-            card.classList.remove('hidden');
-        } else {
-            card.style.display = 'none';
-            card.classList.add('hidden');
-        }
-    });
 }
 
 // Project modal functionality
@@ -511,45 +841,354 @@ function showProjectModal(projectId) {
     const modal = document.getElementById('project-modal');
     const modalBody = document.getElementById('modal-body');
     
+    const catName = getCategoryName(project.category);
+    
+    // Check if it's a painting project (art gallery)
+    if (project.category === 'art') {
+        currentPaintingIndex = currentGalleryPaintings.findIndex(p => p.id === projectId);
+        if (currentPaintingIndex === -1) {
+            // Fallback if stashed array is empty
+            currentGalleryPaintings = projectsData.filter(p => p.category === 'art');
+            currentPaintingIndex = currentGalleryPaintings.findIndex(p => p.id === projectId);
+        }
+
+        renderPaintingModal(project);
+        
+        // Make modal active
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Trigger initial GSAP animations for art gallery modal
+        if (typeof gsap !== 'undefined') {
+            gsap.set(modal, { opacity: 0 });
+            gsap.set('.gallery-modal-img', { scale: 0.9, opacity: 0 });
+            gsap.set('.gallery-modal-details', { y: 25, opacity: 0 });
+
+            const tl = gsap.timeline();
+            tl.to(modal, {
+                opacity: 1,
+                duration: 0.4,
+                ease: 'power2.out'
+            })
+            .to('.gallery-modal-img', {
+                scale: 1,
+                opacity: 1,
+                duration: 0.6,
+                ease: 'power3.out'
+            }, '-=0.1')
+            .to('.gallery-modal-details', {
+                y: 0,
+                opacity: 1,
+                duration: 0.4,
+                ease: 'power2.out'
+            }, '-=0.3');
+        }
+        
+        // Register keyboard slideshow keys listener
+        document.addEventListener('keydown', handleGalleryKeyPress);
+        return;
+    }
+    
+    // Assign Role & Duration mappings
+    let role = 'Lead Developer';
+    let duration = '2 - 3 Months';
+    
+    switch(project.id) {
+        case 1: role = 'Lead AI & Blockchain Developer'; duration = '3 Months'; break;
+        case 2: role = 'AI Developer'; duration = '2 Months'; break;
+        case 3: role = 'AI Developer'; duration = '2 Months'; break;
+        case 4: role = 'Lead UI/UX & AI Developer'; duration = '3 Months'; break;
+        case 6: role = 'Data Analyst'; duration = '1 Month'; break;
+        case 7: role = 'ML Competitor'; duration = 'Ongoing'; break;
+        case 8: role = 'Lead Developer'; duration = '2 Months'; break;
+        case 9: role = 'Full-Stack Developer'; duration = '3 Months'; break;
+        case 10: role = 'Full-Stack Developer'; duration = '2 Months'; break;
+        case 11: role = 'AI Engineer'; duration = '3 Months'; break;
+        case 12: role = 'Author / Poet'; duration = '1 Month'; break;
+        case 13: role = 'Digital Artist'; duration = 'Ongoing'; break;
+        case 14: role = 'Video Producer'; duration = '2 Months'; break;
+        case 15: role = 'Content Creator'; duration = 'Ongoing'; break;
+        case 16: role = 'Full-Stack & AI Developer'; duration = '2 Months'; break;
+        default:
+            if (project.category === 'ai') role = 'AI / ML Developer';
+            else if (project.category === 'data') role = 'Data Analyst / Scientist';
+            else if (project.category === 'web') role = 'Full-Stack Developer';
+            else if (project.category === 'automation') role = 'Automation Engineer';
+            else if (project.category === 'creative') role = 'Creative Director / Designer';
+            else if (project.category === 'content') role = 'Content Creator / Producer';
+    }
+
     modalBody.innerHTML = `
-        <div class="project-modal-content">
-            <div class="project-modal-header">
-                <h2>${project.title}</h2>
-                <div class="project-modal-meta">
-                    <span class="project-modal-category">${getCategoryName(project.category)}</span>
-                    <span class="project-modal-year">${project.year}</span>
-                </div>
-                <div class="project-modal-tech">${project.tech}</div>
-            </div>
-            <div class="project-modal-body">
-                ${project.longDescription}
-            </div>
-            <div class="project-modal-tags">
-                ${project.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('')}
-            </div>
-            <div class="project-modal-links">
-                <a href="${project.links.github}" class="btn btn-primary" target="_blank">
-                    <i class="fab fa-github"></i>
-                    View on GitHub
-                </a>
-                ${project.links.demo !== '#' ? `
-                    <a href="${project.links.demo}" class="btn btn-secondary" target="_blank">
-                        <i class="fas fa-external-link-alt"></i>
-                        Live Demo
-                    </a>
+        <div class="project-modal">
+            <!-- Background Watermark Title -->
+            <div class="modal-bg-title">${project.title}</div>
+            
+            <!-- Left Panel: Large Visual Project Image / Fallback -->
+            <div class="modal-image">
+                ${project.image ? `
+                    <img src="${project.image}" alt="${project.title}">
+                ` : `
+                    <div class="fallback-image-placeholder">
+                        <div class="floating-brand-logo">${catName}</div>
+                        <div class="placeholder-watermark">${project.title}</div>
+                    </div>
+                `}
+                ${project.links.demo && project.links.demo !== '#' ? `
+                    <a href="${project.links.demo}" class="view-btn" target="_blank">View Project</a>
                 ` : ''}
+            </div>
+            
+            <!-- Right Panel: Structured Content -->
+            <div class="modal-content-panel">
+                <span class="year">// ${project.year}</span>
+                <h1>${project.title}</h1>
+                
+                <p>${project.longDescription}</p>
+                
+                <!-- Tech Stack Pills -->
+                <div class="modal-tech-stack">
+                    ${project.tags.map(tag => `<span>${tag}</span>`).join('')}
+                </div>
+                
+                <!-- Metadata Table Grid -->
+                <div class="modal-meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">Category</span>
+                        <span class="meta-value">${catName}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Duration</span>
+                        <span class="meta-value">${duration}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Role</span>
+                        <span class="meta-value">${role}</span>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="modal-action-buttons">
+                    ${project.links.github && project.links.github !== '#' ? `
+                        <a href="${project.links.github}" class="modal-btn modal-btn-primary" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    ` : ''}
+                    ${project.links.demo && project.links.demo !== '#' ? `
+                        <a href="${project.links.demo}" class="modal-btn modal-btn-secondary" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                    ` : ''}
+                </div>
             </div>
         </div>
     `;
-    
+
+    // Make modal active
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // Trigger GSAP animations
+    if (typeof gsap !== 'undefined') {
+        // Reset properties before animation to prevent flashes
+        gsap.set(modal, { opacity: 0 });
+        gsap.set('.modal-image', { x: -100, opacity: 0 });
+        gsap.set('.modal-content-panel', { x: 100, opacity: 0 });
+        gsap.set('.modal-bg-title', { scale: 0.8, opacity: 0 });
+
+        const tl = gsap.timeline();
+        tl.to(modal, {
+            opacity: 1,
+            duration: 0.4,
+            ease: 'power2.out'
+        })
+        .to('.modal-image', {
+            x: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: 'power3.out'
+        }, '-=0.2')
+        .to('.modal-content-panel', {
+            x: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: 'power3.out'
+        }, '-=0.6')
+        .to('.modal-bg-title', {
+            scale: 1,
+            opacity: 0.02,
+            duration: 0.9,
+            ease: 'power2.out'
+        }, '-=0.5');
+    }
+}
+
+// Render dynamic art slideshow contents inside modal
+function renderPaintingModal(project) {
+    const modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = `
+        <div class="gallery-modal-layout">
+            <!-- Left Navigation Button -->
+            <button class="gallery-nav-btn prev-btn" aria-label="Previous painting">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            
+            <!-- Center Viewport -->
+            <div class="gallery-modal-viewport">
+                <img src="${project.image}" alt="${project.title}" class="gallery-modal-img">
+            </div>
+            
+            <!-- Right Navigation Button -->
+            <button class="gallery-nav-btn next-btn" aria-label="Next painting">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <!-- Bottom Details -->
+            <div class="gallery-modal-details">
+                <div class="gallery-modal-meta">
+                    <span class="gallery-modal-medium">${project.tech}</span>
+                </div>
+                <h2 class="gallery-modal-title">${project.title}</h2>
+                <p class="gallery-modal-desc">${project.description || ''}</p>
+            </div>
+        </div>
+    `;
+
+    // Hook up click listeners for prev/next
+    modalBody.querySelector('.prev-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        navigateGallery(-1);
+    });
+
+    modalBody.querySelector('.next-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        navigateGallery(1);
+    });
+}
+
+// Navigate inside stashed gallery paintings with slide transition
+function navigateGallery(direction) {
+    if (currentPaintingIndex === -1 || currentGalleryPaintings.length === 0) return;
+    
+    let newIndex = currentPaintingIndex + direction;
+    if (newIndex < 0) newIndex = currentGalleryPaintings.length - 1;
+    if (newIndex >= currentGalleryPaintings.length) newIndex = 0;
+    
+    currentPaintingIndex = newIndex;
+    const nextProject = currentGalleryPaintings[newIndex];
+    
+    const imgEl = document.querySelector('.gallery-modal-img');
+    const detailsEl = document.querySelector('.gallery-modal-details');
+    
+    if (!imgEl || !detailsEl) return;
+    
+    if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline({
+            onComplete: () => {
+                imgEl.src = nextProject.image;
+                imgEl.alt = nextProject.title;
+                
+                detailsEl.innerHTML = `
+                    <div class="gallery-modal-meta">
+                        <span class="gallery-modal-medium">${nextProject.tech}</span>
+                    </div>
+                    <h2 class="gallery-modal-title">${nextProject.title}</h2>
+                    <p class="gallery-modal-desc">${nextProject.description || ''}</p>
+                `;
+                
+                gsap.fromTo(imgEl, 
+                    { opacity: 0, x: direction * 50, scale: 0.95 },
+                    { opacity: 1, x: 0, scale: 1, duration: 0.5, ease: 'power2.out' }
+                );
+                
+                gsap.fromTo(detailsEl,
+                    { opacity: 0, y: 15 },
+                    { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+                );
+            }
+        });
+        
+        tl.to(imgEl, { opacity: 0, x: -direction * 50, scale: 0.95, duration: 0.3, ease: 'power2.in' })
+          .to(detailsEl, { opacity: 0, y: -10, duration: 0.2, ease: 'power2.in' }, '-=0.2');
+    } else {
+        imgEl.src = nextProject.image;
+        imgEl.alt = nextProject.title;
+        detailsEl.innerHTML = `
+            <div class="gallery-modal-meta">
+                <span class="gallery-modal-medium">${nextProject.tech}</span>
+            </div>
+            <h2 class="gallery-modal-title">${nextProject.title}</h2>
+            <p class="gallery-modal-desc">${nextProject.description || ''}</p>
+        `;
+    }
+}
+
+// Handle keyboard arrows slideshow triggers
+function handleGalleryKeyPress(e) {
+    if (e.key === 'ArrowLeft') {
+        navigateGallery(-1);
+    } else if (e.key === 'ArrowRight') {
+        navigateGallery(1);
+    }
 }
 
 function closeProjectModal() {
     const modal = document.getElementById('project-modal');
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
+    const isArtModal = document.querySelector('.gallery-modal-layout') !== null;
+    
+    // Cleanup keyboard listeners
+    document.removeEventListener('keydown', handleGalleryKeyPress);
+    
+    if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline({
+            onComplete: () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                document.getElementById('modal-body').innerHTML = ''; // Prevent memory leaks or residues
+            }
+        });
+        
+        if (isArtModal) {
+            tl.to('.gallery-modal-img', {
+                scale: 0.9,
+                opacity: 0,
+                duration: 0.35,
+                ease: 'power2.in'
+            })
+            .to('.gallery-modal-details', {
+                y: 20,
+                opacity: 0,
+                duration: 0.25,
+                ease: 'power2.in'
+            }, '-=0.2')
+            .to(modal, {
+                opacity: 0,
+                duration: 0.25,
+                ease: 'power2.in'
+            }, '-=0.15');
+        } else {
+            tl.to('.modal-image', {
+                x: -50,
+                opacity: 0,
+                duration: 0.4,
+                ease: 'power3.in'
+            })
+            .to('.modal-content-panel', {
+                x: 50,
+                opacity: 0,
+                duration: 0.4,
+                ease: 'power3.in'
+            }, '-=0.4')
+            .to(modal, {
+                opacity: 0,
+                duration: 0.3,
+                ease: 'power2.in'
+            }, '-=0.2');
+        }
+    } else {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        document.getElementById('modal-body').innerHTML = '';
+    }
 }
 
 // Contact form functionality
@@ -1139,19 +1778,14 @@ function initPremiumLoading() {
 
 // Enhanced Parallax Effect
 function initParallaxEffect() {
-    const parallaxElements = document.querySelectorAll('.hero, .floating-shapes .shape');
+    const parallaxElements = document.querySelectorAll('.floating-shapes .shape');
     
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
         
         parallaxElements.forEach(element => {
-            if (element.classList.contains('hero')) {
-                element.style.transform = `translate3d(0, ${rate}px, 0)`;
-            } else {
-                const speed = Math.random() * 0.5 + 0.2;
-                element.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
-            }
+            const speed = Math.random() * 0.5 + 0.2;
+            element.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
         });
     });
 }
@@ -1210,88 +1844,248 @@ const originalInitializePortfolio = initializePortfolio;
 initializePortfolio = function() {
     originalInitializePortfolio();
     initPremiumFeatures();
-    initAchievementsCarousel();
+    initEducationShowcase(); // Initialize first as it appears higher in the DOM (allows correct ScrollTrigger pin spacing calculations)
+    initProjectsFilter();    // Initialize second as it appears below education in the DOM
+    initAchievementsReveal(); // Initialize third as it appears below projects in the DOM
 };
 
-// ===== ACHIEVEMENTS 3D CARD STACK =====
-function initAchievementsCarousel() {
-    const container = document.querySelector('.achievements-3d-container');
-    const radioButtons = document.querySelectorAll('input[name="achievement-slider"]');
-    
-    if (!container || !radioButtons.length) return;
-    
-    let currentIndex = 0;
-    let autoPlayInterval;
-    const autoPlayDelay = 3500; // 3.5 seconds per card
-    
-    // Auto-play functionality - runs continuously
-    function nextCard() {
-        currentIndex = (currentIndex + 1) % radioButtons.length;
-        radioButtons[currentIndex].checked = true;
+// ===== ACHIEVEMENTS REVEAL EFFECT =====
+function initAchievementsReveal() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        console.warn('GSAP or ScrollTrigger is not loaded, skipping achievements reveal animation.');
+        return;
     }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from('#achievements .achievement-card', {
+        scrollTrigger: {
+            trigger: '#achievements',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out'
+    });
+}
+
+// ===== EDUCATION SHOWCASE DATA AND FUNCTIONS =====
+const educationData = [
+  {
+    id: "01",
+    title: "Xth Standard",
+    school: "Krishna International School",
+    year: "2020 – 2021",
+    percentage: "93.2%",
+    description: "Completed secondary education with strong academic foundation in Mathematics and Science."
+  },
+  {
+    id: "02",
+    title: "XIIth Standard",
+    school: "Krishna International School",
+    year: "2022 – 2023",
+    percentage: "93.6%",
+    description: "Completed senior secondary education with focus on Physics, Chemistry and Mathematics."
+  },
+  {
+    id: "03",
+    title: "B.Tech Computer Science and Engineering",
+    school: "ABES Engineering College",
+    year: "2023 – 2027",
+    cgpa: "8.5",
+    description: "Pursuing Computer Science and Engineering with focus on software development, AI systems, algorithms and full stack development."
+  },
+  {
+    id: "04",
+    title: "BS Data Science",
+    school: "Indian Institute of Technology Madras",
+    year: "2023 – 2027",
+    cgpa: "7.0",
+    description: "Pursuing BS Degree in Data Science with specialization in machine learning, analytics and statistical modelling."
+  }
+];
+
+let eduCurrentIndex = -1;
+let dotState = { angle: 0 };
+let dotTween = null;
+
+function updateEducation(index) {
+    if (index === eduCurrentIndex) return;
     
-    function startAutoPlay() {
-        // Clear any existing interval
-        if (autoPlayInterval) {
-            clearInterval(autoPlayInterval);
+    // Update active state on points
+    const points = document.querySelectorAll('.point');
+    points.forEach((item, idx) => {
+        if (idx === index) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
         }
-        // Start continuous loop
-        autoPlayInterval = setInterval(nextCard, autoPlayDelay);
+    });
+    
+    // Update right content with transition
+    const contentBox = document.getElementById('content-box');
+    if (contentBox) {
+        contentBox.style.opacity = '0';
+        contentBox.style.transform = 'translateY(15px)';
+        
+        setTimeout(() => {
+            const data = educationData[index];
+            document.getElementById('edu-id').textContent = data.id;
+            document.getElementById('edu-title').textContent = data.title;
+            
+            // Format institution, duration, and grade dynamically
+            let detailsHTML = `<span style="font-weight: 700; color: #111111;">${data.school}</span>`;
+            if (data.year) {
+                detailsHTML += ` <span style="font-size: 1.1rem; color: #6b6b6b; font-weight: normal; margin-left: 10px;">(${data.year})</span>`;
+            }
+            if (data.cgpa) {
+                detailsHTML += `<div style="font-size: 1.2rem; color: #ff5533; font-weight: 600; margin-top: 8px; letter-spacing: 1px;">CGPA: ${data.cgpa}</div>`;
+            }
+            if (data.percentage) {
+                detailsHTML += `<div style="font-size: 1.2rem; color: #ff5533; font-weight: 600; margin-top: 8px; letter-spacing: 1px;">Percentage: ${data.percentage}</div>`;
+            }
+            
+            document.getElementById('edu-school').innerHTML = detailsHTML;
+            document.getElementById('edu-description').textContent = data.description;
+            
+            contentBox.style.opacity = '1';
+            contentBox.style.transform = 'translateY(0)';
+        }, 300);
     }
     
-    // Update current index when user manually interacts
-    radioButtons.forEach((radio, index) => {
-        radio.addEventListener('change', () => {
-            currentIndex = index;
+    // Smoothly animate the indicator dot along the circumference path
+    const isMobile = window.innerWidth <= 1024;
+    const circleEl = document.querySelector('.circle');
+    const indicator = document.querySelector('.circle .indicator');
+    
+    if (circleEl && indicator) {
+        const radius = circleEl.clientWidth / 2;
+        const center = radius;
+        
+        // Desktop: active positions are 0, 90, 180, 270 deg
+        // Mobile: active positions are 270 (top), 360 (right), 90 (bottom), 180 (left) deg
+        const targetAngle = isMobile ? (270 + index * 90) : (index * 90);
+        
+        if (dotTween) dotTween.kill();
+        
+        if (eduCurrentIndex === -1) {
+            dotState.angle = targetAngle;
+            const rad = targetAngle * Math.PI / 180;
+            const x = center + radius * Math.cos(rad);
+            const y = center + radius * Math.sin(rad);
+            gsap.set(indicator, { left: x, top: y });
+        } else {
+            dotTween = gsap.to(dotState, {
+                angle: targetAngle,
+                duration: 0.8,
+                ease: "power3.out",
+                onUpdate: () => {
+                    const rad = dotState.angle * Math.PI / 180;
+                    const x = center + radius * Math.cos(rad);
+                    const y = center + radius * Math.sin(rad);
+                    gsap.set(indicator, { left: x, top: y });
+                }
+            });
+        }
+    }
+    
+    eduCurrentIndex = index;
+}
+
+function initEducationShowcase() {
+    const section = document.querySelector('.education');
+    if (!section) return;
+
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        console.error('GSAP or ScrollTrigger is not loaded');
+        return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+
+    // Desktop
+    mm.add("(min-width: 1025px)", () => {
+        const wheel = document.querySelector('.circle');
+        const eduTrigger = ScrollTrigger.create({
+            trigger: ".education",
+            start: "top top",
+            end: "+=5000",
+            scrub: 1.5, // Smooth elegant scrub lag
+            pin: true,
+            onUpdate: (self) => {
+                const progress = self.progress;
+                // Rotate the circle from 0 to -270 degrees
+                const rotationVal = - (progress * 270);
+                
+                gsap.set(wheel, { rotation: rotationVal });
+                
+                // Counter-rotate each point (including its label) so they stay upright by setting the CSS variable
+                gsap.set(".point", { 
+                    "--point-rotation": `${-rotationVal}deg`
+                });
+
+                // Update active index
+                const index = Math.min(3, Math.floor(progress * 4));
+                updateEducation(index);
+            }
         });
-    });
-    
-    // Keyboard navigation (doesn't stop auto-play)
-    document.addEventListener('keydown', (e) => {
-        const achievementsSection = document.getElementById('achievements');
-        if (!achievementsSection) return;
+
+        // Click handler for desktop
+        const points = document.querySelectorAll('.point');
+        const clickHandlers = [];
         
-        const rect = achievementsSection.getBoundingClientRect();
-        const isInView = rect.top < window.innerHeight && rect.bottom >= 0;
+        points.forEach((item, idx) => {
+            const handler = () => {
+                const scrollPos = eduTrigger.start + (idx / 3) * 5000;
+                window.scrollTo({
+                    top: scrollPos + 2,
+                    behavior: 'smooth'
+                });
+            };
+            item.addEventListener('click', handler);
+            clickHandlers.push({ el: item, fn: handler });
+        });
+
+        // Initialize state
+        eduCurrentIndex = -1;
+        updateEducation(0);
+
+        return () => {
+            clickHandlers.forEach(h => h.el.removeEventListener('click', h.fn));
+            if (eduTrigger) eduTrigger.kill();
+        };
+    });
+
+    // Mobile/Tablet
+    mm.add("(max-width: 1024px)", () => {
+        const wheel = document.querySelector('.circle');
+        if (wheel) wheel.style.transform = '';
         
-        if (isInView) {
-            if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                currentIndex = (currentIndex - 1 + radioButtons.length) % radioButtons.length;
-                radioButtons[currentIndex].checked = true;
-            } else if (e.key === 'ArrowRight') {
-                e.preventDefault();
-                currentIndex = (currentIndex + 1) % radioButtons.length;
-                radioButtons[currentIndex].checked = true;
-            }
-        }
-    });
-    
-    // Touch/swipe support for mobile (doesn't stop auto-play)
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    container.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    container.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
+        const points = document.querySelectorAll('.point');
+        points.forEach((item, idx) => {
+            item.style.transform = '';
+        });
         
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swipe left - next card
-                currentIndex = (currentIndex + 1) % radioButtons.length;
-            } else {
-                // Swipe right - previous card
-                currentIndex = (currentIndex - 1 + radioButtons.length) % radioButtons.length;
-            }
-            radioButtons[currentIndex].checked = true;
-        }
+        // Reset state
+        eduCurrentIndex = -1; 
+        updateEducation(0);
+
+        // Click handler for mobile
+        const clickHandlers = [];
+        points.forEach((item, idx) => {
+            const handler = () => {
+                updateEducation(idx);
+            };
+            item.addEventListener('click', handler);
+            clickHandlers.push({ el: item, fn: handler });
+        });
+
+        return () => {
+            clickHandlers.forEach(h => h.el.removeEventListener('click', h.fn));
+        };
     });
-    
-    // Start continuous auto-play on init
-    startAutoPlay();
 }
