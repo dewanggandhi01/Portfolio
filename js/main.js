@@ -1196,12 +1196,14 @@ function initContactForm() {
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const btnText = document.getElementById('btn-text');
-    const formStatus = document.getElementById('form-status');
     
     if (!contactForm) return;
     
     // Initialize EmailJS (Replace with your credentials)
     emailjs.init('YOUR_PUBLIC_KEY'); // Replace with your EmailJS public key
+    
+    // Initialize submit button magnetic effect
+    initMagneticSubmitButton();
     
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -1212,9 +1214,15 @@ function initContactForm() {
         
         // Validate form
         if (validateContactForm(data)) {
+            // Set hidden field value for backwards compatibility
+            const hiddenFromName = document.getElementById('hidden-from-name');
+            if (hiddenFromName) {
+                hiddenFromName.value = (data.from_firstname + ' ' + data.from_lastname).trim();
+            }
+            
             // Disable button and show loading state
             submitBtn.disabled = true;
-            btnText.textContent = 'Sending...';
+            if (btnText) btnText.textContent = 'Sending...';
             submitBtn.style.opacity = '0.7';
             
             // Send email using EmailJS
@@ -1230,7 +1238,7 @@ function initContactForm() {
                     
                     // Reset button
                     submitBtn.disabled = false;
-                    btnText.textContent = 'Send Message';
+                    if (btnText) btnText.textContent = 'Send Message';
                     submitBtn.style.opacity = '1';
                     
                     console.log('SUCCESS!', response.status, response.text);
@@ -1241,7 +1249,7 @@ function initContactForm() {
                     
                     // Reset button
                     submitBtn.disabled = false;
-                    btnText.textContent = 'Send Message';
+                    if (btnText) btnText.textContent = 'Send Message';
                     submitBtn.style.opacity = '1';
                     
                     console.log('FAILED...', error);
@@ -1251,14 +1259,74 @@ function initContactForm() {
     });
 }
 
+function initMagneticSubmitButton() {
+    const btn = document.querySelector('.submit-btn-pill');
+    if (!btn) return;
+    
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        // Calculate relative position of cursor inside button
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        // Push button toward cursor (strength factor 0.3)
+        gsap.to(btn, {
+            x: x * 0.3,
+            y: y * 0.3,
+            duration: 0.3,
+            ease: 'power2.out'
+        });
+        
+        // Move button text inside even more to create parallax effect
+        const btnText = btn.querySelector('span');
+        const btnIcon = btn.querySelector('i');
+        if (btnText) {
+            gsap.to([btnText, btnIcon], {
+                x: x * 0.15,
+                y: y * 0.15,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        }
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+        // Snap back to origin
+        gsap.to(btn, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: 'elastic.out(1, 0.3)'
+        });
+        
+        const btnText = btn.querySelector('span');
+        const btnIcon = btn.querySelector('i');
+        if (btnText) {
+            gsap.to([btnText, btnIcon], {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: 'elastic.out(1, 0.3)'
+            });
+        }
+    });
+}
+
 function validateContactForm(data) {
-    const name = data.from_name;
+    const firstname = data.from_firstname;
+    const lastname = data.from_lastname;
     const email = data.from_email;
     const subject = data.subject;
+    const projectType = data.project_type;
     const message = data.message;
     
-    if (!name || !name.trim()) {
-        showNotification('Please enter your name.', 'error');
+    if (!firstname || !firstname.trim()) {
+        showNotification('Please enter your first name.', 'error');
+        return false;
+    }
+    
+    if (!lastname || !lastname.trim()) {
+        showNotification('Please enter your last name.', 'error');
         return false;
     }
     
@@ -1269,6 +1337,11 @@ function validateContactForm(data) {
     
     if (!subject || !subject.trim()) {
         showNotification('Please enter a subject.', 'error');
+        return false;
+    }
+    
+    if (!projectType) {
+        showNotification('Please select a project type.', 'error');
         return false;
     }
     
@@ -1847,6 +1920,7 @@ initializePortfolio = function() {
     initEducationShowcase(); // Initialize first as it appears higher in the DOM (allows correct ScrollTrigger pin spacing calculations)
     initProjectsFilter();    // Initialize second as it appears below education in the DOM
     initAchievementsReveal(); // Initialize third as it appears below projects in the DOM
+    initContactAnimations(); // Initialize fourth as it appears below achievements in the DOM
 };
 
 // ===== ACHIEVEMENTS REVEAL EFFECT =====
@@ -1868,6 +1942,78 @@ function initAchievementsReveal() {
         y: 40,
         duration: 0.8,
         stagger: 0.1,
+        ease: 'power3.out'
+    });
+}
+
+// ===== CONTACT SECTION ANIMATIONS =====
+function initContactAnimations() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        console.warn('GSAP or ScrollTrigger is not loaded, skipping contact animations.');
+        return;
+    }
+    
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Header timeline trigger
+    const headerTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '#contact',
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+        }
+    });
+    
+    headerTl.from('#contact .contact-label', {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        ease: 'power3.out'
+    }).from('#contact .contact-title', {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        ease: 'power3.out'
+    }, '-=0.4');
+
+    // Left info blocks reveal
+    gsap.from('#contact .info-block', {
+        scrollTrigger: {
+            trigger: '#contact .contact-left',
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out'
+    });
+
+    // Form fields staggered reveal
+    gsap.from('#contact .form-group-new, #contact .submit-btn-pill', {
+        scrollTrigger: {
+            trigger: '#contact .premium-contact-form',
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out'
+    });
+
+    // Bottom contact bar fade-in
+    gsap.from('#contact .bottom-contact-bar', {
+        scrollTrigger: {
+            trigger: '#contact .bottom-contact-bar',
+            start: 'top 90%',
+            toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
         ease: 'power3.out'
     });
 }
