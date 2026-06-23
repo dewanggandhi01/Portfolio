@@ -2115,6 +2115,156 @@ function updateAchievementsStack(activeIndex) {
     });
 }
 
+// ===== ACHIEVEMENTS DETAIL MODAL DATA =====
+const achievementsDetailsData = {
+    0: {
+        title: "HackHeaven 2.0 Finalist",
+        org: "GDG On Campus",
+        year: "2025",
+        description: "Selected among the top 12 finalist teams out of 200+ teams across the region. Developed 'AI Toolkit', a plug-and-play developer integration tool designed to streamline AI integration for developers.",
+        details: [
+            "Presented the prototype directly to Google Developer Group mentors and industry experts.",
+            "Designed clean APIs and lightweight SDKs enabling quick integration in under 5 minutes.",
+            "Leveraged Gemini API and vector embeddings for advanced contextual recommendations.",
+            "Awarded Certificate of Excellence and secured mentorship opportunities."
+        ],
+        images: ["assets/hack1.jpeg", "assets/hack2.jpeg"]
+    },
+    1: {
+        title: "IITM BS Certification",
+        org: "IIT Madras",
+        year: "2024",
+        description: "Completed the Foundational Level in Programming and Data Science at India's premier technical institute, IIT Madras. Maintained high academic performance, earning multiple course badges.",
+        details: [
+            "Rigorous coursework covering Python programming, Statistics for Data Science, Mathematics, and Database Systems.",
+            "Earned Subject Badges for scoring top grades in multiple foundation subjects.",
+            "Gained hands-on experience in computational thinking and structured problem solving.",
+            "Collaborated on multiple online academic projects and coding assignments."
+        ],
+        images: ["assets/badges_in_iitm.png"]
+    },
+    2: {
+        title: "NCC 'C' Certificate",
+        org: "ABES Engineering College",
+        year: "2026",
+        description: "Proud holder of the prestigious NCC 'C' Certificate. Served as a senior cadet leading recruit training, community outreach, and disaster response drills.",
+        details: [
+            "Demonstrated outstanding leadership, discipline, and teamwork during national camps.",
+            "Organized annual parade events, drill training, and weapon handling sessions.",
+            "Led community service campaigns including blood donation drives and tree plantation events.",
+            "Maintained strict physical fitness standards and mentored 50+ junior cadets."
+        ],
+        images: ["assets/ncc-c certificate.jpeg", "assets/ncc.jpeg", "assets/ncc1.jpeg"]
+    },
+    3: {
+        title: "Paranox Finalist",
+        org: "Paranox 2.0",
+        year: "2024",
+        description: "Stood out among 1500+ teams during an intense, high-pressure 30-hour collaborative hackathon. Focused on building data-driven analytical tools for real-world impact.",
+        details: [
+            "Worked round-the-clock with teammate to clean, preprocess, and model complex datasets.",
+            "Developed an interactive dashboard visualizing real-time predictive analytics.",
+            "Utilized regression and time-series models to forecast growth trends.",
+            "Highly commended by the jury for analytical accuracy and UX design."
+        ],
+        images: [
+            "assets/1763550705080.jpeg", 
+            "assets/1763550705112.jpeg", 
+            "assets/1763550716186.jpeg", 
+            "assets/1763550717023.jpeg"
+        ]
+    }
+};
+
+function showAchievementModal(idx) {
+    const data = achievementsDetailsData[idx];
+    if (!data) return;
+
+    const modal = document.getElementById('achievement-modal');
+    if (!modal) return;
+
+    modal.querySelector('.modal-card-org').textContent = data.org;
+    modal.querySelector('.modal-card-title').textContent = data.title;
+    modal.querySelector('.modal-card-year').textContent = data.year;
+    modal.querySelector('.modal-card-desc').textContent = data.description;
+
+    const highlightsList = modal.querySelector('.modal-highlights-list');
+    highlightsList.innerHTML = '';
+    data.details.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        highlightsList.appendChild(li);
+    });
+
+    const mainImg = document.getElementById('modal-gallery-active-img');
+    const thumbsContainer = document.getElementById('modal-gallery-thumbs');
+    
+    if (data.images && data.images.length > 0) {
+        mainImg.src = data.images[0];
+        mainImg.alt = data.title;
+        mainImg.style.display = 'block';
+        
+        thumbsContainer.innerHTML = '';
+        if (data.images.length > 1) {
+            data.images.forEach((imgSrc, i) => {
+                const thumb = document.createElement('div');
+                thumb.className = `modal-thumb ${i === 0 ? 'active' : ''}`;
+                thumb.innerHTML = `<img src="${imgSrc}" alt="Thumbnail ${i + 1}">`;
+                thumb.addEventListener('click', () => {
+                    mainImg.style.opacity = 0;
+                    setTimeout(() => {
+                        mainImg.src = imgSrc;
+                        mainImg.style.opacity = 1;
+                    }, 150);
+                    
+                    thumbsContainer.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                });
+                thumbsContainer.appendChild(thumb);
+            });
+            thumbsContainer.style.display = 'flex';
+        } else {
+            thumbsContainer.style.display = 'none';
+        }
+    } else {
+        mainImg.style.display = 'none';
+        thumbsContainer.style.display = 'none';
+    }
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    
+    const container = modal.querySelector('.achievement-modal-container');
+    if (typeof gsap !== 'undefined') {
+        gsap.fromTo(container, 
+            { scale: 0.85, opacity: 0 }, 
+            { scale: 1, opacity: 1, duration: 0.5, ease: 'power3.out', overwrite: 'auto' }
+        );
+    }
+}
+
+function closeAchievementModal() {
+    const modal = document.getElementById('achievement-modal');
+    if (!modal) return;
+
+    const container = modal.querySelector('.achievement-modal-container');
+    if (typeof gsap !== 'undefined') {
+        gsap.to(container, {
+            scale: 0.85,
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power3.in',
+            onComplete: () => {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+    } else {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
 function initAchievementsReveal() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         console.warn('GSAP or ScrollTrigger is not loaded, skipping achievements reveal.');
@@ -2177,14 +2327,39 @@ function initAchievementsReveal() {
     // Card click navigation
     cards.forEach((card, idx) => {
         card.addEventListener('click', () => {
-            const step = (trigger.end - trigger.start) / totalCards;
-            const targetScroll = trigger.start + idx * step + 50;
-            window.scrollTo({
-                top: targetScroll,
-                behavior: 'smooth'
-            });
+            if (card.classList.contains('active')) {
+                if (achievementsDetailsData[idx]) {
+                    showAchievementModal(idx);
+                }
+            } else {
+                const step = (trigger.end - trigger.start) / totalCards;
+                const targetScroll = trigger.start + idx * step + 50;
+                window.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth'
+                });
+            }
         });
     });
+
+    // Register close listeners for achievement modal
+    const achModal = document.getElementById('achievement-modal');
+    if (achModal) {
+        const closeBtn = document.getElementById('achievement-modal-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeAchievementModal);
+        }
+        achModal.addEventListener('click', (e) => {
+            if (e.target === achModal) {
+                closeAchievementModal();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && achModal.classList.contains('open')) {
+                closeAchievementModal();
+            }
+        });
+    }
 
     // Recalculate layout on resize
     window.addEventListener('resize', () => {

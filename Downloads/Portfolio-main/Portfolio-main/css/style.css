@@ -2570,19 +2570,15 @@ section.focus .section-title {
 }
 
 .achievements-label {
-  color: rgba(255, 255, 255, 0.4);
+  color: #777;
   font-size: 14px;
   letter-spacing: 4px;
   text-transform: uppercase;
   position: absolute;
   top: 60px;
-  left: 8vw;
+  right: 8vw;
   font-family: 'Space Grotesk', sans-serif;
   z-index: 10;
-}
-
-.achievements-label .accent-orange {
-  color: #FF5A36;
 }
 
 .achievements-counter {
@@ -2685,6 +2681,52 @@ section.focus .section-title {
   z-index: 2;
 }
 
+/* Card Sticker Style for Achievements */
+.card-sticker-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.card-sticker {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 90, 54, 0.05);
+  border: 2px dashed rgba(255, 90, 54, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FF5A36;
+  font-size: 2.2rem;
+  box-shadow: 0 0 25px rgba(255, 90, 54, 0.15);
+  animation: stickerGlow 3s infinite ease-in-out;
+  transition: all 0.4s ease;
+}
+
+.achievement-stack-card.active:hover .card-sticker {
+  transform: scale(1.08) rotate(5deg);
+  border-color: rgba(255, 90, 54, 0.85);
+  background: rgba(255, 90, 54, 0.1);
+  box-shadow: 0 0 35px rgba(255, 90, 54, 0.35);
+}
+
+@keyframes stickerGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 90, 54, 0.15);
+    border-color: rgba(255, 90, 54, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 90, 54, 0.4);
+    border-color: rgba(255, 90, 54, 0.8);
+  }
+}
+
 .card-content-area {
   height: 38%;
   padding: 1.25rem;
@@ -2752,7 +2794,7 @@ section.focus .section-title {
   
   .achievements-label {
     top: 40px;
-    left: 6vw;
+    right: 6vw;
   }
   
   .achievements-counter {
@@ -6112,5 +6154,250 @@ section {
   
   .gallery-modal-desc {
     font-size: 13px;
+  }
+}
+
+/* Achievement Details Modal Styles */
+.achievement-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.achievement-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.achievement-modal-container {
+  background: #111111;
+  border: 1px solid rgba(255, 90, 54, 0.25);
+  border-radius: 28px;
+  width: 90%;
+  max-width: 960px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.9);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(255, 90, 54, 0.08);
+}
+
+.achievement-modal-overlay.open .achievement-modal-container {
+  transform: scale(1);
+}
+
+.achievement-modal-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.achievement-modal-close:hover {
+  background: #FF5A36;
+  border-color: #FF5A36;
+  transform: rotate(90deg);
+}
+
+.achievement-modal-content {
+  padding: 50px;
+}
+
+.achievement-modal-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.achievement-modal-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-card-org {
+  color: #FF5A36;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.modal-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 15px;
+}
+
+.modal-card-year {
+  display: inline-block;
+  background: rgba(255, 90, 54, 0.1);
+  border: 1px solid rgba(255, 90, 54, 0.2);
+  color: #FF5A36;
+  padding: 4px 14px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  width: fit-content;
+  margin-bottom: 25px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.modal-card-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #cccccc;
+  margin-bottom: 30px;
+}
+
+.modal-highlights-section h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.modal-highlights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-highlights-list li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #b0b0b0;
+}
+
+.modal-highlights-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #FF5A36;
+  font-weight: bold;
+}
+
+.achievement-modal-right {
+  width: 100%;
+}
+
+.modal-gallery-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-gallery-main {
+  width: 100%;
+  height: 320px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #181818;
+}
+
+.modal-gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.modal-gallery-thumbs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: #181818;
+  transition: all 0.3s ease;
+}
+
+.modal-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-thumb:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 90, 54, 0.5);
+}
+
+.modal-thumb.active {
+  border-color: #FF5A36;
+  box-shadow: 0 0 10px rgba(255, 90, 54, 0.3);
+}
+
+/* Tablet & Mobile Responsiveness for Modal */
+@media (max-width: 768px) {
+  .achievement-modal-container {
+    max-height: 90vh;
+    border-radius: 20px;
+  }
+  
+  .achievement-modal-content {
+    padding: 30px 20px;
+  }
+  
+  .achievement-modal-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .achievement-modal-close {
+    top: 15px;
+    right: 15px;
+    width: 38px;
+    height: 38px;
+  }
+  
+  .modal-gallery-main {
+    height: 240px;
+  }
+  
+  .modal-card-title {
+    font-size: 1.8rem;
   }
 }
