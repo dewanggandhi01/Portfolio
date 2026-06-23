@@ -2004,26 +2004,198 @@ initializePortfolio = function() {
     initContactAnimations(); // Initialize fourth as it appears below achievements in the DOM
 };
 
-// ===== ACHIEVEMENTS REVEAL EFFECT =====
+// ===== ACHIEVEMENTS INTERACTIVE STACKED-CARD SHOWCASE =====
+function updateAchievementsStack(activeIndex) {
+    const cards = document.querySelectorAll('.achievement-stack-card');
+    const isMobile = window.innerWidth <= 768;
+    
+    // Update counters and background watermarks
+    const currentCounter = document.querySelector('.achievements-counter .counter-current');
+    if (currentCounter) {
+        currentCounter.textContent = String(activeIndex + 1).padStart(2, '0');
+    }
+    const bgNum = document.getElementById('achievements-bg-num');
+    if (bgNum) {
+        bgNum.textContent = String(activeIndex + 1).padStart(2, '0');
+    }
+
+    cards.forEach((card, idx) => {
+        const offset = idx - activeIndex;
+        const absOffset = Math.abs(offset);
+        
+        if (isMobile) {
+            if (offset === 0) {
+                gsap.to(card, {
+                    opacity: 1,
+                    scale: 1,
+                    rotation: 0,
+                    x: 0,
+                    y: 0,
+                    zIndex: 5,
+                    pointerEvents: 'auto',
+                    duration: 0.6,
+                    ease: 'power3.out'
+                });
+                card.classList.add('active');
+            } else {
+                gsap.to(card, {
+                    opacity: 0,
+                    scale: 0.8,
+                    rotation: offset < 0 ? -10 : 10,
+                    x: offset < 0 ? -300 : 300,
+                    y: 0,
+                    zIndex: 0,
+                    pointerEvents: 'none',
+                    duration: 0.6,
+                    ease: 'power3.out'
+                });
+                card.classList.remove('active');
+            }
+            return;
+        }
+
+        // Desktop logic with 3D layers and depth
+        if (absOffset > 2) {
+            gsap.to(card, {
+                opacity: 0,
+                scale: 0.6,
+                rotation: 0,
+                x: offset > 0 ? 500 : -500,
+                y: 50,
+                zIndex: 0,
+                pointerEvents: 'none',
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+            card.classList.remove('active');
+        } else if (offset === 0) {
+            gsap.to(card, {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: -15, // Lifted slightly
+                zIndex: 5,
+                pointerEvents: 'auto',
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+            card.classList.add('active');
+        } else if (absOffset === 1) {
+            const rot = offset < 0 ? -8 : 8;
+            const xShift = offset < 0 ? -240 : 240;
+            gsap.to(card, {
+                opacity: 0.7,
+                scale: 0.9,
+                rotation: rot,
+                x: xShift,
+                y: 0,
+                zIndex: 3,
+                pointerEvents: 'none',
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+            card.classList.remove('active');
+        } else if (absOffset === 2) {
+            const rot = offset < 0 ? -16 : 16;
+            const xShift = offset < 0 ? -440 : 440;
+            gsap.to(card, {
+                opacity: 0.3,
+                scale: 0.75,
+                rotation: rot,
+                x: xShift,
+                y: 15,
+                zIndex: 1,
+                pointerEvents: 'none',
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+            card.classList.remove('active');
+        }
+    });
+}
+
 function initAchievementsReveal() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        console.warn('GSAP or ScrollTrigger is not loaded, skipping achievements reveal animation.');
+        console.warn('GSAP or ScrollTrigger is not loaded, skipping achievements reveal.');
         return;
     }
 
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from('#achievements .achievement-card', {
-        scrollTrigger: {
-            trigger: '#achievements',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-        },
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out'
+    const cards = document.querySelectorAll('.achievement-stack-card');
+    const totalCards = cards.length;
+    if (totalCards === 0) return;
+
+    // Set initial layout
+    updateAchievementsStack(0);
+
+    const trigger = ScrollTrigger.create({
+        trigger: "#achievements",
+        start: "top top",
+        end: `+=${totalCards * 700}`, // 700px of scroll per card
+        pin: true,
+        scrub: 1.0,
+        id: 'achievements-trigger',
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+            const progress = self.progress;
+            let activeIndex = Math.floor(progress * totalCards);
+            if (activeIndex >= totalCards) activeIndex = totalCards - 1;
+            if (activeIndex < 0) activeIndex = 0;
+            
+            updateAchievementsStack(activeIndex);
+        }
+    });
+
+    // Touch swipe left/right navigation for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const achievementsSection = document.getElementById('achievements');
+    
+    if (achievementsSection) {
+        achievementsSection.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        achievementsSection.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 50) {
+                const step = (trigger.end - trigger.start) / totalCards;
+                const currentScroll = window.scrollY;
+                const direction = diff < 0 ? 1 : -1;
+                const targetScroll = currentScroll + direction * step;
+                window.scrollTo({
+                    top: Math.max(trigger.start, Math.min(trigger.end, targetScroll)),
+                    behavior: 'smooth'
+                });
+            }
+        }, { passive: true });
+    }
+
+    // Card click navigation
+    cards.forEach((card, idx) => {
+        card.addEventListener('click', () => {
+            const step = (trigger.end - trigger.start) / totalCards;
+            const targetScroll = trigger.start + idx * step + 50;
+            window.scrollTo({
+                top: targetScroll,
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Recalculate layout on resize
+    window.addEventListener('resize', () => {
+        const triggerObj = ScrollTrigger.getById('achievements-trigger');
+        if (triggerObj) {
+            const progress = triggerObj.progress;
+            let activeIndex = Math.floor(progress * totalCards);
+            if (activeIndex >= totalCards) activeIndex = totalCards - 1;
+            if (activeIndex < 0) activeIndex = 0;
+            updateAchievementsStack(activeIndex);
+        }
     });
 }
 
