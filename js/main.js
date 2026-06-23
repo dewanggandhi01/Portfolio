@@ -1205,6 +1205,65 @@ function initContactForm() {
     // Initialize submit button magnetic effect
     initMagneticSubmitButton();
     
+    // Clear button functionality
+    const clearBtn = document.getElementById('clear-btn');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            contactForm.reset();
+            ['firstname', 'email', 'message'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('input-error');
+            });
+        });
+    }
+    
+    // Input focus/typing resets
+    ['firstname', 'email', 'message'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => {
+                el.classList.remove('input-error');
+            });
+        }
+    });
+
+    // Close button for Success card
+    const successCloseBtn = document.getElementById('success-close-btn');
+    if (successCloseBtn) {
+        successCloseBtn.addEventListener('click', () => {
+            const successCard = document.getElementById('contact-success-state');
+            if (successCard) {
+                // Fade out success card
+                gsap.to(successCard, {
+                    opacity: 0,
+                    scale: 0.9,
+                    duration: 0.4,
+                    ease: 'power2.in',
+                    onComplete: () => {
+                        successCard.classList.remove('active');
+                        // Reset inline styles from the GSAP transition
+                        gsap.set(successCard, { clearProps: 'all' });
+                        
+                        // Fade back in form/header
+                        gsap.fromTo(['.contact-header-wrap', '.contact-grid'], 
+                            { opacity: 0, y: 30 },
+                            { 
+                                opacity: 1, 
+                                y: 0, 
+                                duration: 0.6, 
+                                stagger: 0.1, 
+                                ease: 'power3.out',
+                                onComplete: () => {
+                                    gsap.set(['.contact-header-wrap', '.contact-grid'], { clearProps: 'all' });
+                                }
+                            }
+                        );
+                    }
+                });
+            }
+        });
+    }
+    
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -1217,7 +1276,7 @@ function initContactForm() {
             // Set hidden field value for backwards compatibility
             const hiddenFromName = document.getElementById('hidden-from-name');
             if (hiddenFromName) {
-                hiddenFromName.value = (data.from_firstname + ' ' + data.from_lastname).trim();
+                hiddenFromName.value = (data.from_firstname + ' ' + (data.from_lastname || '')).trim();
             }
             
             // Disable button and show loading state
@@ -1234,6 +1293,32 @@ function initContactForm() {
                 function(response) {
                     // Success
                     showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+                    
+                    // GSAP timeline to transition from form to success state
+                    const successTl = gsap.timeline();
+                    successTl.to(['.contact-header-wrap', '.contact-grid'], {
+                        opacity: 0,
+                        y: -30,
+                        duration: 0.5,
+                        stagger: 0.1,
+                        ease: 'power2.in',
+                        onComplete: () => {
+                            // Disable pointer events on hidden elements
+                            gsap.set(['.contact-header-wrap', '.contact-grid'], { pointerEvents: 'none' });
+                            
+                            const successCard = document.getElementById('contact-success-state');
+                            if (successCard) {
+                                successCard.classList.add('active');
+                                // GSAP animation for success card elements
+                                gsap.fromTo('#contact-success-state .success-icon', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' });
+                                gsap.fromTo(['#contact-success-state h2', '#contact-success-state .success-message', '#contact-success-state .success-subtext', '#contact-success-state #success-close-btn'], 
+                                    { y: 20, opacity: 0 }, 
+                                    { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out', delay: 0.2 }
+                                );
+                            }
+                        }
+                    });
+
                     contactForm.reset();
                     
                     // Reset button
@@ -1314,43 +1399,39 @@ function initMagneticSubmitButton() {
 
 function validateContactForm(data) {
     const firstname = data.from_firstname;
-    const lastname = data.from_lastname;
     const email = data.from_email;
-    const subject = data.subject;
-    const projectType = data.project_type;
     const message = data.message;
     
-    if (!firstname || !firstname.trim()) {
-        showNotification('Please enter your first name.', 'error');
-        return false;
-    }
+    let isValid = true;
     
-    if (!lastname || !lastname.trim()) {
-        showNotification('Please enter your last name.', 'error');
-        return false;
+    // Clear previous error classes
+    ['firstname', 'email', 'message'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('input-error');
+    });
+    
+    if (!firstname || !firstname.trim()) {
+        const el = document.getElementById('firstname');
+        if (el) el.classList.add('input-error');
+        showNotification('Please enter your first name.', 'error');
+        isValid = false;
     }
     
     if (!email || !email.trim() || !isValidEmail(email)) {
+        const el = document.getElementById('email');
+        if (el) el.classList.add('input-error');
         showNotification('Please enter a valid email address.', 'error');
-        return false;
-    }
-    
-    if (!subject || !subject.trim()) {
-        showNotification('Please enter a subject.', 'error');
-        return false;
-    }
-    
-    if (!projectType) {
-        showNotification('Please select a project type.', 'error');
-        return false;
+        isValid = false;
     }
     
     if (!message || !message.trim()) {
+        const el = document.getElementById('message');
+        if (el) el.classList.add('input-error');
         showNotification('Please enter your message.', 'error');
-        return false;
+        isValid = false;
     }
     
-    return true;
+    return isValid;
 }
 
 function isValidEmail(email) {
@@ -1991,7 +2072,7 @@ function initContactAnimations() {
     });
 
     // Form fields staggered reveal
-    gsap.from('#contact .form-group-new, #contact .submit-btn-pill', {
+    gsap.from('#contact .form-group-new, #contact .clear-btn-outlined, #contact .submit-btn-pill', {
         scrollTrigger: {
             trigger: '#contact .premium-contact-form',
             start: 'top 75%',
