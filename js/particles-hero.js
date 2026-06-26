@@ -167,13 +167,15 @@ function initParticlesHero() {
 
     console.log('Initializing interactive particles...');
 
+    const parentHeight = canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
+
     scene = new THREE.Scene();
     
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
+    camera = new THREE.PerspectiveCamera(50, window.innerWidth / parentHeight, 1, 10000);
     camera.position.z = 300;
     
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth, parentHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     
     clock = new THREE.Clock();
@@ -375,9 +377,12 @@ function createParticles(texture) {
 function onMouseMoveParticles(event) {
     if (!hitArea || !camera) return;
     
-    // Use window dimensions for consistent calculation
+    const canvas = document.getElementById('particleCanvas');
+    const parentHeight = canvas && canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
+    
+    // Use container dimensions for consistent calculation
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    mouse.y = -(event.clientY / parentHeight) * 2 + 1;
     
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObject(hitArea);
@@ -391,9 +396,12 @@ function onMouseMoveParticles(event) {
 function onTouchMoveParticles(event) {
     if (!hitArea || !camera) return;
     
+    const canvas = document.getElementById('particleCanvas');
+    const parentHeight = canvas && canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
+    
     const touch = event.touches[0];
     mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+    mouse.y = -(touch.clientY / parentHeight) * 2 + 1;
     
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObject(hitArea);
@@ -407,10 +415,13 @@ function onTouchMoveParticles(event) {
 function onResizeParticles() {
     if (!camera || !renderer) return;
     
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const canvas = document.getElementById('particleCanvas');
+    const parentHeight = canvas && canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
+    
+    camera.aspect = window.innerWidth / parentHeight;
     camera.updateProjectionMatrix();
     fovHeight = 2 * Math.tan((camera.fov * Math.PI / 180) / 2) * camera.position.z;
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth, parentHeight);
     
     if (particles && hitArea) {
         const width = particles.material.uniforms.uTextureSize.value.x;

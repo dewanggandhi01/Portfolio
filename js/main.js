@@ -16,7 +16,6 @@ function initializePortfolio() {
     initTypingEffect();
     initScrollAnimations();
     initParticles();
-    initSkillsEcosystem();
     initStatsCounter();
     initContactForm();
     initThemeToggle();
@@ -2012,8 +2011,9 @@ initializePortfolio = function() {
     initPremiumFeatures();
     initEducationShowcase(); // Initialize first as it appears higher in the DOM (allows correct ScrollTrigger pin spacing calculations)
     initProjectsFilter();    // Initialize second as it appears below education in the DOM
-    initAchievementsReveal(); // Initialize third as it appears below projects in the DOM
-    initContactAnimations(); // Initialize fourth as it appears below achievements in the DOM
+    initSkillsEcosystem();   // Initialize third as it appears below projects in the DOM (DOM index order)
+    initAchievementsReveal(); // Initialize fourth as it appears below skills in the DOM
+    initContactAnimations(); // Initialize fifth as it appears below achievements in the DOM
 };
 
 // ===== ACHIEVEMENTS INTERACTIVE STACKED-CARD SHOWCASE =====
