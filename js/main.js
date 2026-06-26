@@ -610,6 +610,12 @@ function generateTrackProjects() {
                     });
                 }
                 
+                // Click handler for the entire painting card to open the slideshow modal
+                card.addEventListener('click', function(e) {
+                    const pid = parseInt(this.getAttribute('data-project-id'));
+                    showProjectModal(pid);
+                });
+                
                 trackEl.appendChild(card);
             });
 
@@ -644,12 +650,17 @@ function generateTrackProjects() {
                 trackEl.appendChild(card);
             });
 
-            // Click handler for details buttons
-            trackEl.querySelectorAll('.view-details').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const pid = parseInt(this.getAttribute('data-project-id'));
-                    showProjectModal(pid);
+            // Click handler for the entire card (excluding anchor links)
+            trackEl.querySelectorAll('.project-track-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('a')) {
+                        return;
+                    }
+                    const btn = this.querySelector('.view-details');
+                    if (btn) {
+                        const pid = parseInt(btn.getAttribute('data-project-id'));
+                        showProjectModal(pid);
+                    }
                 });
             });
         }
@@ -1492,6 +1503,7 @@ function initThemeToggle() {
 // Back to top functionality
 function initBackToTop() {
     const backToTopBtn = document.getElementById('back-to-top');
+    if (!backToTopBtn) return;
     
     window.addEventListener('scroll', function() {
         if (window.scrollY > 500) {

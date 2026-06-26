@@ -4659,11 +4659,13 @@ html {
 }
 
 .nav-logo {
-  font-size: 14px;
-  font-weight: 600;
+  font-family: 'Playball', 'Dancing Script', cursive;
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 400;
   color: #ffffff !important; /* White logo for dark theme */
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  text-transform: none; /* Keep Title Case */
+  letter-spacing: 0px;
 }
 
 .nav-links {
@@ -4676,15 +4678,18 @@ html {
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
+  border: 1px solid transparent !important;
+  padding: 8px 20px !important; /* Glassmorphic capsule padding */
+  border-radius: 24px !important;
 }
 
-.nav-links a:hover {
-  opacity: 1;
-  color: #ffffff !important; /* White on hover */
+.nav-links a:hover,
+.nav-links a.active {
+  color: #FF5A36 !important; /* Orange on hover & active */
+  background: rgba(255, 90, 54, 0.08) !important; /* Subtle orange glass background */
+  border-color: rgba(255, 90, 54, 0.25) !important; /* Sleek orange border */
 }
 
 /* Scroll Indicator z-index adjustment */
@@ -4705,11 +4710,11 @@ html {
 }
 
 /* Vertical Positioning for 5 Rows */
-.marquee-row-1 { top: 15%; transform: translateY(-50%); }
-.marquee-row-2 { top: 32.5%; transform: translateY(-50%); }
+.marquee-row-1 { top: 14%; transform: translateY(-50%); }
+.marquee-row-2 { top: 32%; transform: translateY(-50%); }
 .marquee-row-3 { top: 50%; transform: translateY(-50%); }
-.marquee-row-4 { top: 67.5%; transform: translateY(-50%); }
-.marquee-row-5 { top: 85%; transform: translateY(-50%); }
+.marquee-row-4 { top: 68%; transform: translateY(-50%); }
+.marquee-row-5 { top: 86%; transform: translateY(-50%); }
 
 .name-track {
   display: flex;
@@ -4724,10 +4729,10 @@ html {
 }
 
 .name-track .forest-text {
-  font-size: 13vw; /* Increased text size */
+  font-size: 10.5vw; /* Decreased text size by ~20% */
   font-weight: 900;
   white-space: nowrap;
-  letter-spacing: -0.05em;
+  letter-spacing: 0.04em; /* Expanded letter spacing to avoid overlays */
   margin-right: 150px; /* Spacing between names */
   line-height: 1;
   display: inline-flex;
@@ -4826,7 +4831,10 @@ html {
   .about-section {
     height: auto !important;
     min-height: 100vh !important;
-    padding: 0 8vw 100px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 120px 8vw 80px !important; /* Top padding to prevent navbar overlap */
   }
 
   .about-wrapper {
@@ -4844,7 +4852,7 @@ html {
 
 @media (max-width: 768px) {
   .about-section {
-    padding: 0 6vw 80px !important;
+    padding: 120px 6vw 60px !important;
   }
 
   .about-label {
@@ -4862,8 +4870,9 @@ html {
   }
 
   .name-track .forest-text {
-    font-size: 22vw;
+    font-size: 18vw; /* Decreased size by ~18% */
     margin-right: 80px;
+    letter-spacing: 0.04em; /* Expanded letter spacing on mobile */
   }
 
   .name-track .forest-char {
@@ -4875,19 +4884,19 @@ html {
   }
 
   /* Compact spacing for mobile rows */
-  .marquee-row-1 { top: 20% !important; }
-  .marquee-row-2 { top: 35% !important; }
+  .marquee-row-1 { top: 18% !important; }
+  .marquee-row-2 { top: 34% !important; }
   .marquee-row-3 { top: 50% !important; }
-  .marquee-row-4 { top: 65% !important; }
-  .marquee-row-5 { top: 80% !important; }
+  .marquee-row-4 { top: 66% !important; }
+  .marquee-row-5 { top: 82% !important; }
 
   .navbar {
     padding: 20px 30px;
   }
 
   .nav-logo {
-    font-size: 16px !important;
-    letter-spacing: 1px;
+    font-size: 20px !important;
+    letter-spacing: 0px !important;
     z-index: 101;
   }
 
@@ -5230,7 +5239,7 @@ section {
     flex-direction: column !important;
     justify-content: center;
     align-items: center;
-    padding: 80px 24px !important;
+    padding: 100px 24px 80px !important;
     min-height: auto;
     height: auto !important;
   }
@@ -5251,27 +5260,58 @@ section {
     left: auto;
     top: auto;
     transform: none !important;
-    border: 1px solid #d9d9d9;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .circle .indicator {
+    width: 44px !important;
+    height: 44px !important;
+    background: rgba(255, 85, 51, 0.15) !important;
+    border: 1.5px solid #ff5533 !important;
+    box-shadow: 0 0 15px rgba(255, 85, 51, 0.35) !important;
   }
 
   .point {
-    font-size: 44px;
-    width: auto;
-    height: auto;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    transform-origin: center center !important;
   }
 
   .num-val {
-    font-size: 44px;
+    font-size: 20px !important;
+    font-weight: 800;
+    color: #888888;
+    transition: color 0.4s ease;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .point.active .num-val {
+    color: #ffffff !important;
   }
 
   .point-label {
-    font-size: 11px;
-    margin-left: 5px;
+    display: none !important;
   }
 
   .nav-dot {
-    width: 6px;
-    height: 6px;
+    display: none !important;
+  }
+
+  .point-content {
+    margin-left: 0 !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
   }
 
   /* Position cardinal points on mobile circular layout */
@@ -5307,14 +5347,11 @@ section {
     transform: translate(-50%, -50%) !important;
   }
 
-  .point.active {
-    transform: scale(1.15) !important;
-  }
-
-  .point-content {
-    margin-left: 10px;
-    gap: 8px;
-  }
+  /* Preserve translation offsets during active scaling */
+  .point-1.active { transform: translate(-50%, -50%) scale(1.1) !important; }
+  .point-2.active { transform: translate(50%, -50%) scale(1.1) !important; }
+  .point-3.active { transform: translate(-50%, 50%) scale(1.1) !important; }
+  .point-4.active { transform: translate(-50%, -50%) scale(1.1) !important; }
 
   .indicator-dot {
     display: none;
@@ -5349,7 +5386,7 @@ section {
 
 @media (max-width: 480px) {
   .circle-wrapper {
-    height: 320px;
+    height: 300px;
   }
 
   .circle {
@@ -5357,12 +5394,18 @@ section {
     height: 240px;
   }
 
-  .num-val {
-    font-size: 32px;
+  .circle .indicator {
+    width: 36px !important;
+    height: 36px !important;
   }
 
-  .point-label {
-    font-size: 9px;
+  .point {
+    width: 50px;
+    height: 50px;
+  }
+
+  .num-val {
+    font-size: 16px !important;
   }
 
   #edu-title {
@@ -5426,7 +5469,8 @@ section {
   text-transform: uppercase;
   position: absolute;
   top: 60px;
-  right: 8vw;
+  left: 8vw;
+  right: auto;
   z-index: 10;
 }
 
@@ -5468,7 +5512,7 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  padding: 60px;
+  padding: 120px 60px 60px 60px;
   align-content: center;
   box-sizing: border-box;
   z-index: 3;
@@ -5677,6 +5721,7 @@ section {
   position: relative;
   z-index: 2;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .project-track-card:hover {
@@ -5791,7 +5836,8 @@ section {
 
   .projects-label {
     top: 40px;
-    right: 6vw;
+    left: 6vw;
+    right: auto;
   }
 
   .projects-branding {
@@ -5806,7 +5852,7 @@ section {
 
   .projects-grid {
     grid-template-columns: 1fr 1fr;
-    padding: 40px;
+    padding: 90px 40px 40px 40px;
   }
   
   .category-overlay {
@@ -5824,14 +5870,15 @@ section {
   }
   .panel-track {
     gap: 30px;
-    padding: 0 5vw;
+    padding: 0 5vw 40px 5vw;
+    box-sizing: border-box;
   }
 }
 
 @media (max-width: 768px) {
   .projects-grid {
     grid-template-columns: 1fr;
-    padding: 30px 20px;
+    padding: 80px 20px 30px 20px;
   }
 
   .projects-grid .project-card {
@@ -5872,7 +5919,8 @@ section {
   }
   .panel-track {
     gap: 20px;
-    padding: 0 4vw;
+    padding: 0 4vw 60px 4vw;
+    box-sizing: border-box;
   }
 }
 
@@ -5956,7 +6004,7 @@ section {
   overflow: hidden;
   border: 12px solid #ffffff; /* Thick white border frame */
   background: #ffffff; /* Solid white background matching frame */
-  cursor: default;
+  cursor: pointer;
   box-sizing: border-box;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   height: auto;
