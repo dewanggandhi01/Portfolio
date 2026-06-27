@@ -140,8 +140,8 @@ function initNavigation() {
     window.addEventListener('scroll', updateActiveNavigation);
     
     // Ensure last section can scroll to top
-    adjustBodyPadding();
-    window.addEventListener('resize', adjustBodyPadding);
+    // adjustBodyPadding();
+    // window.addEventListener('resize', adjustBodyPadding);
 }
 
 // Adjust body padding to ensure last section can scroll to top
@@ -2157,7 +2157,7 @@ function initContactAnimations() {
         }
     });
     
-    headerTl.from('#contact .contact-label', {
+    headerTl.from('#contact .contact-section-label', {
         opacity: 0,
         y: 20,
         duration: 0.6,
@@ -2169,44 +2169,30 @@ function initContactAnimations() {
         ease: 'power3.out'
     }, '-=0.4');
 
-    // Left info blocks reveal
-    gsap.from('#contact .info-block', {
+    // Left info block & connect links staggered reveal
+    gsap.from('#contact .availability-block, #contact .connect-block', {
         scrollTrigger: {
-            trigger: '#contact .contact-left',
-            start: 'top 75%',
+            trigger: '#contact .footer-contact-left',
+            start: 'top 80%',
             toggleActions: 'play none none none'
         },
         opacity: 0,
         y: 30,
         duration: 0.8,
-        stagger: 0.15,
+        stagger: 0.2,
         ease: 'power3.out'
     });
 
-    // Form fields staggered reveal
-    gsap.from('#contact .form-group-new, #contact .clear-btn-outlined, #contact .submit-btn-pill', {
+    // Thank you text reveal
+    gsap.from('#contact .thank-you-text', {
         scrollTrigger: {
-            trigger: '#contact .premium-contact-form',
-            start: 'top 75%',
+            trigger: '#contact .footer-contact-right',
+            start: 'top 80%',
             toggleActions: 'play none none none'
         },
         opacity: 0,
-        y: 30,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out'
-    });
-
-    // Bottom contact bar fade-in
-    gsap.from('#contact .bottom-contact-bar', {
-        scrollTrigger: {
-            trigger: '#contact .bottom-contact-bar',
-            start: 'top 90%',
-            toggleActions: 'play none none none'
-        },
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
+        y: 50,
+        duration: 1.0,
         ease: 'power3.out'
     });
 }
