@@ -300,6 +300,74 @@ const projectsData = [
     year: "2025"
   },
   {
+    id: 30,
+    title: "ABYSSAL — Into the Deep",
+    category: "web",
+    tech: "Next.js 15, React Three Fiber, Three.js, Custom GLSL Shaders, Web Audio API",
+    description: "An interactive, scroll-driven WebGL cinematic experience exploring marine ecosystems across ocean depth zones, built with Next.js 15, React Three Fiber, custom PBR GLSL shaders, and procedural Web Audio.",
+    longDescription: `
+      <p>ABYSSAL renders a continuous 3D oceanic journey from high atmospheric sky altitude down to the abyssal sea floor. Movement is driven by continuous scroll interpolation, dynamically transitioning lighting models, depth-based fog attenuation, procedural audio frequencies, and marine biological ecosystems.</p>
+      
+      <h4>Architecture & Core Modules:</h4>
+      <ul>
+        <li><strong>1. Physically-Based Ocean Shader</strong> — 10-Octave Gerstner Wave GPU Simulation with subsurface scattering (SSS), Cook-Torrance GGX specular reflection, and Snell's Window total internal reflection.</li>
+        <li><strong>2. Biological 3D Boids Schooling Simulation</strong> — Real-time flocking algorithms (Separation, Alignment, Cohesion, Avoidance) with lead-fish turning wave propagation and aerodynamic roll banking for Silver Mackerels, Yellowfin Tangs, and Coral Damselfish.</li>
+        <li><strong>3. Physical Atmosphere & Cloud Rendering</strong> — Rayleigh & Mie scattering sky dome shader, anamorphic solar flare with dual-pass corona, and domain-warped FBM noise volumetric cloud shaders with silver lining edges.</li>
+        <li><strong>4. Marine Creature Rigs</strong> — Great White Apex Shark with countershading PBR material & S-curve body sway, Translucent Bioluminescent Jellyfish with contracting bell dome & 12 ribbon tentacles, Seabirds with dual-joint wing articulation, and Deep Sea Ecosystem (Anglerfish with glowing lure bulb, Giant Squid, hydrothermal vents).</li>
+      </ul>
+      
+      <h4>Technical Stack & Optimization:</h4>
+      <ul>
+        <li><strong>Framework:</strong> Next.js 15 (App Router, Turbopack)</li>
+        <li><strong>3D Engine:</strong> React Three Fiber (R3F) / Three.js</li>
+        <li><strong>Shaders:</strong> Custom GLSL (Vertex & Fragment)</li>
+        <li><strong>Audio:</strong> Web Audio API (Procedural Synthesizers & Spatial Filters)</li>
+        <li><strong>Styling:</strong> Vanilla CSS Modules</li>
+      </ul>
+    `,
+    tags: ["Next.js 15", "React Three Fiber", "WebGL", "GLSL", "Three.js", "Web Audio API", "CSS Modules"],
+    links: {
+      github: "https://github.com/dewanggandhi01/ABYSSAL-Into-the-Deep",
+      demo: "https://abyssal-into-the-deep.vercel.app/"
+    },
+    year: "2025"
+  },
+  {
+    id: 31,
+    title: "DG Connect (Contact QR Generator)",
+    category: "web",
+    tech: "React Native (Expo SDK 54), Node.js, Express.js, Expo Camera, Animated API",
+    description: "Mobile contact-sharing platform replacing traditional contact exchanges with dynamic scannable QR payloads, direct native dialer integrations, and gesture-driven contact management.",
+    longDescription: `
+      <p>DG Connect standardizes contact discovery into a single scannable QR code protocol. Structured into a lightweight React Native mobile client for cross-platform rendering and a Node.js Express backend service handling OTP authentication and verified payload tokens.</p>
+      
+      <h4>Key Engineering Architecture:</h4>
+      <ul>
+        <li><strong>Native Driver Animations:</strong> View transitions and gesture fills utilizing React Native's Native Driver (<code>useNativeDriver: true</code>) maintaining 60 FPS execution.</li>
+        <li><strong>Gesture Mechanics:</strong> Custom PanResponder and Animated.Value interpolations implementing Samsung One UI style dynamic full-fill gestures (right-swipe call trigger, left-swipe deletion).</li>
+        <li><strong>Direct Protocol Hooks:</strong> Native URI scheme handlers (<code>tel:</code>, <code>https://wa.me/</code>, <code>sms:</code>) invoking device dialers, WhatsApp channels, and SMS clients directly.</li>
+        <li><strong>Camera Reticle Viewfinder:</strong> Built on <code>expo-camera</code> with real-time barcode scanning, active torch toggle state, and custom translucent vignette viewport overlay.</li>
+        <li><strong>OTP Authentication:</strong> Express backend service (<code>/api/auth/verify-otp</code>) issuing verification tokens upon 6-digit OTP entry.</li>
+      </ul>
+      
+      <h4>Feature Matrix:</h4>
+      <ul>
+        <li><strong>Contact Card Passbook UI:</strong> High-resolution QR encoding via <code>react-native-qrcode-svg</code> with one-tap native share sheet and clipboard copying.</li>
+        <li><strong>Scanner Viewport:</strong> 260px reticle frame with animated laser beam, instant scan result bottom sheet with one-tap dialing, WhatsApp chat, and SMS dispatch.</li>
+        <li><strong>Contact Management:</strong> Day-grouped history (Today, Yesterday), speed dial favorites scroll container, and instant client-side search filtering.</li>
+      </ul>
+      
+      <h4>Application Demo:</h4>
+      <p><a href="https://drive.google.com/file/d/1o_p2M86eh6ti6tf_z4Kgtt-mOSmlQJNm/view?usp=sharing" target="_blank" style="color: #ff5536; font-weight: 600; text-decoration: underline;">Watch Continuous Mobile Screen Recording Demo on Google Drive ↗</a></p>
+    `,
+    tags: ["React Native", "Expo SDK 54", "Express.js", "Node.js", "QR Code", "Mobile", "PanResponder"],
+    links: {
+      github: "https://github.com/dewanggandhi01/contact-qr-generator",
+      demo: "https://drive.google.com/file/d/1o_p2M86eh6ti6tf_z4Kgtt-mOSmlQJNm/view?usp=sharing"
+    },
+    year: "2025"
+  },
+  {
     id: 8,
     title: "SwiftShare (DΞBO)",
     category: "web",

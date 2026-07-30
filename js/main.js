@@ -918,6 +918,8 @@ function showProjectModal(projectId) {
         case 14: role = 'Video Producer'; duration = '2 Months'; break;
         case 15: role = 'Content Creator'; duration = 'Ongoing'; break;
         case 16: role = 'Full-Stack & AI Developer'; duration = '2 Months'; break;
+        case 30: role = 'Graphics & WebGL Engineer'; duration = '2 Months'; break;
+        case 31: role = 'Mobile & Full-Stack Developer'; duration = '2 Months'; break;
         default:
             if (project.category === 'ai') role = 'AI / ML Developer';
             else if (project.category === 'data') role = 'Data Analyst / Scientist';
