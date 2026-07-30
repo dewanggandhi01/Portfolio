@@ -305,6 +305,7 @@ const projectsData = [
     category: "web",
     tech: "Next.js 15, React Three Fiber, Three.js, Custom GLSL Shaders, Web Audio API",
     description: "An interactive, scroll-driven WebGL cinematic experience exploring marine ecosystems across ocean depth zones, built with Next.js 15, React Three Fiber, custom PBR GLSL shaders, and procedural Web Audio.",
+    image: "assets/abyssal.png",
     longDescription: `
       <p>ABYSSAL renders a continuous 3D oceanic journey from high atmospheric sky altitude down to the abyssal sea floor. Movement is driven by continuous scroll interpolation, dynamically transitioning lighting models, depth-based fog attenuation, procedural audio frequencies, and marine biological ecosystems.</p>
       
