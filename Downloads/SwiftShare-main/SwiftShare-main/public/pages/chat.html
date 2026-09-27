@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content, viewport-fit=cover, maximum-scale=1">
+    <title>DΞBO CHAT – Instant Messaging</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+</head>
+<body class="dark">
+
+<!-- Top Navigation -->
+<nav class="main-nav" id="main-nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-brand"><span class="brand-icon">Ξ</span> DΞBO</a>
+        <div class="nav-links" id="nav-links">
+            <a href="/" class="nav-link">File Transfer</a>
+            <a href="/pdf" class="nav-link">PDF Toolkit</a>
+            <a href="/chat" class="nav-link active">Chat</a>
+            <a href="/translate" class="nav-link">Translate</a>
+            <a href="/streamfinder" class="nav-link">Movies</a>
+            <a href="/#pricing" class="nav-link">Pricing</a>
+        </div>
+        <div class="nav-actions">
+            <a href="/" class="btn btn-nav">Get Started</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Warning Banner -->
+<div class="warning-banner" id="warningBanner">
+    <div class="warning-text">⚠ For a better experience, use this website in Incognito Mode. Note: Chat history and preferences will not be saved.</div>
+</div>
+
+<!-- Bottom Navigation (mobile) -->
+<nav class="bottom-nav" aria-label="Mobile navigation">
+    <div class="bottom-nav-inner">
+        <a href="/" class="btm-link">
+            <span class="btm-icon"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>
+            <span class="btm-label">Home</span>
+        </a>
+        <a href="/pdf" class="btm-link">
+            <span class="btm-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+            <span class="btm-label">PDF</span>
+        </a>
+        <a href="/chat" class="btm-link active">
+            <span class="btm-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+            <span class="btm-label">Chat</span>
+        </a>
+        <a href="/translate" class="btm-link">
+            <span class="btm-icon"><svg viewBox="0 0 24 24"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg></span>
+            <span class="btm-label">Translate</span>
+        </a>
+        <a href="/streamfinder" class="btm-link">
+            <span class="btm-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+            <span class="btm-label">Movies</span>
+        </a>
+        <a href="/games" class="btm-link">
+            <span class="btm-icon"><svg viewBox="0 0 24 24"><path d="M6 12h4m-2-2v4m5-1h.01M17 11h.01M15 5H9a7 7 0 1 0 0 14h6a7 7 0 1 0 0-14z"/></svg></span>
+            <span class="btm-label">Games</span>
+        </a>
+        <a href="/#pricing" class="btm-link">
+            <span class="btm-icon"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span>
+            <span class="btm-label">Pricing</span>
+        </a>
+    </div>
+</nav>
+
+<!-- Setup Screen -->
+<div id="setup-screen" class="setup-screen">
+    <div class="setup-card">
+        <h1>💬 DΞBO CHAT</h1>
+        <p class="setup-sub">Chat instantly — no sign-up needed. Connect via code or QR.</p>
+        <label class="field-label">Your Name</label>
+        <input type="text" class="field-input" id="setup-name" placeholder="Enter a name..." maxlength="30" autocomplete="off">
+        <label class="field-label">Choose Avatar</label>
+        <div class="avatar-grid" id="avatar-grid"></div>
+        <button class="btn-primary" id="setup-go">Start Chatting →</button>
+    </div>
+</div>
+
+<!-- Chat App -->
+<div id="chat-app" class="chat-app" hidden>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-user" id="sidebar-user"></div>
+            <div class="sidebar-actions">
+                <button class="icon-btn" id="btn-new-chat" title="New Chat">➕</button>
+                <button class="icon-btn" id="btn-random-chat" title="Talk to Random">🎲</button>
+                <button class="icon-btn" id="btn-settings" title="Settings">⚙️</button>
+                <button class="icon-btn" id="btn-toggle-dark" title="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" class="field-input" id="search-chats" placeholder="🔍 Search chats or messages...">
+        </div>
+        <!-- Mobile-first Random Chat CTA (visible on small screens) -->
+        <div class="random-cta" id="random-cta">
+            <button class="btn-primary btn-random btn-random-cta" id="btn-random-chat-mobile" type="button">
+                <span class="random-cta-icon" aria-hidden="true">🎲</span>
+                <span class="random-cta-text">
+                    <span class="random-cta-title">Random Chat</span>
+                    <span class="random-cta-sub">Meet someone new instantly</span>
+                </span>
+                <span class="random-cta-arrow" aria-hidden="true">›</span>
+            </button>
+        </div>
+        <div class="chat-list" id="chat-list">
+            <div class="empty-list" id="empty-list">
+                <p>No chats yet</p>
+                <button class="btn-primary btn-sm" id="btn-new-chat2">Start a new chat</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main chat area -->
+    <main class="chat-main" id="chat-main">
+        <!-- Floating promotional images -->
+        <div class="promo-floats" aria-hidden="true">
+            <img src="/promo-images/ChatGPT%20Image%20Mar%208,%202026,%2002_58_16%20AM.png" class="promo-img promo-1" alt="">
+            <img src="/promo-images/ChatGPT%20Image%20Mar%208,%202026,%2002_58_20%20AM.png" class="promo-img promo-2" alt="">
+            <img src="/promo-images/ChatGPT%20Image%20Mar%208,%202026,%2003_08_32%20AM.png" class="promo-img promo-3" alt="">
+            <img src="/promo-images/Screenshot%202026-03-08%20025926.png" class="promo-img promo-4" alt="">
+            <img src="/promo-images/ChatGPT%20Image%20Mar%208,%202026,%2002_58_16%20AM.png" class="promo-img promo-5" alt="">
+            <img src="/promo-images/ChatGPT%20Image%20Mar%208,%202026,%2003_08_32%20AM.png" class="promo-img promo-6" alt="">
+        </div>
+
+        <!-- Empty state -->
+        <div class="chat-empty" id="chat-empty">
+            <div class="chat-empty-icon">💬</div>
+            <h2>DΞBO CHAT</h2>
+            <p>Send and receive messages instantly.<br>Select a chat or create a new one to get started.</p>
+            <p style="font-size:.78rem;color:var(--text3);margin-bottom:20px;">🔒 End-to-end encrypted</p>
+            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                <button class="btn-primary" id="btn-new-chat3">New Chat</button>
+                <button class="btn-primary btn-random" id="btn-random-chat2">🎲 Talk to Random</button>
+            </div>
+        </div>
+
+        <!-- Active chat -->
+        <div class="chat-active" id="chat-active" hidden>
+            <!-- Chat header -->
+            <div class="chat-header" id="chat-header">
+                <button class="icon-btn back-btn" id="btn-back">←</button>
+                <div class="chat-header-avatar" id="header-avatar"></div>
+                <div class="chat-header-info">
+                    <span class="chat-header-name" id="header-name"></span>
+                    <span class="chat-header-status" id="header-status"></span>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="icon-btn" id="btn-chat-search" title="Search in chat">🔍</button>
+                    <button class="icon-btn" id="btn-chat-menu" title="Menu">⋮</button>
+                </div>
+            </div>
+            <!-- In-chat search -->
+            <div class="inchat-search" id="inchat-search" hidden>
+                <input type="text" class="field-input" id="inchat-search-input" placeholder="Search messages...">
+                <button class="icon-btn" id="inchat-search-close">✕</button>
+            </div>
+            <!-- Messages -->
+            <div class="messages-area" id="messages-area"></div>
+            <!-- Typing indicator -->
+            <div class="typing-bar" id="typing-bar" hidden>
+                <span class="typing-dots"><span></span><span></span><span></span></span>
+                <span id="typing-name"></span> is typing...
+            </div>
+            <!-- Reply bar -->
+            <div class="reply-bar" id="reply-bar" hidden>
+                <div class="reply-preview" id="reply-preview"></div>
+                <button class="icon-btn" id="reply-cancel">✕</button>
+            </div>
+            <!-- Edit bar -->
+            <div class="edit-bar" id="edit-bar" hidden>
+                <span>✏️ Editing message</span>
+                <button class="icon-btn" id="edit-cancel">✕</button>
+            </div>
+            <!-- Input -->
+            <div class="input-bar">
+                <button class="icon-btn" id="btn-attach" title="Attach file">📎</button>
+                <input type="file" id="file-input" hidden multiple>
+                <div class="input-wrap">
+                    <textarea class="msg-input" id="msg-input" placeholder="Type a message..." rows="1"></textarea>
+                </div>
+                <button class="icon-btn" id="btn-emoji" title="Emoji">😊</button>
+                <button class="icon-btn record-btn" id="btn-voice" title="Voice message">🎤</button>
+                <button class="btn-send" id="btn-send" title="Send">➤</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Settings Panel (slides over sidebar) -->
+<div class="settings-panel" id="settings-panel" hidden>
+    <div class="settings-header">
+        <button class="icon-btn" id="settings-back">←</button>
+        <h3>Settings</h3>
+    </div>
+
+    <!-- Profile card -->
+    <div class="settings-profile" id="settings-profile">
+        <div class="settings-avatar" id="settings-avatar-display">😀</div>
+        <div class="settings-profile-info">
+            <span class="settings-profile-name" id="settings-name-display">User</span>
+            <span class="settings-profile-bio" id="settings-bio-display">Hey there! I'm using DΞBO CHAT</span>
+        </div>
+    </div>
+
+    <!-- Settings Sections -->
+    <div class="settings-sections">
+
+        <!-- 1. Profile Settings -->
+        <div class="settings-item" data-section="profile">
+            <span class="settings-icon">👤</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Profile</span>
+                <span class="settings-item-sub">Name, avatar, bio, username</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 2. Privacy Settings -->
+        <div class="settings-item" data-section="privacy">
+            <span class="settings-icon">🔒</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Privacy</span>
+                <span class="settings-item-sub">Last seen, read receipts, blocked</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 3. Notifications -->
+        <div class="settings-item" data-section="notifications">
+            <span class="settings-icon">🔔</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Notifications</span>
+                <span class="settings-item-sub">Message alerts, sounds</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 4. Chat Settings -->
+        <div class="settings-item" data-section="chats">
+            <span class="settings-icon">💬</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Chats</span>
+                <span class="settings-item-sub">Wallpaper, font, enter key</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 5. Security -->
+        <div class="settings-item" data-section="security">
+            <span class="settings-icon">🛡️</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Security</span>
+                <span class="settings-item-sub">2FA, devices, encryption</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 6. Blocked Users -->
+        <div class="settings-item" data-section="blocked">
+            <span class="settings-icon">🚫</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Blocked Users</span>
+                <span class="settings-item-sub">Manage blocked contacts</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 7. Storage & Data -->
+        <div class="settings-item" data-section="storage">
+            <span class="settings-icon">💾</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Storage & Data</span>
+                <span class="settings-item-sub">Media, storage usage</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 8. Chat Backup -->
+        <div class="settings-item" data-section="backup">
+            <span class="settings-icon">☁️</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Chat Backup</span>
+                <span class="settings-item-sub">Backup & restore chats</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 9. Language -->
+        <div class="settings-item" data-section="language">
+            <span class="settings-icon">🌍</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Language</span>
+                <span class="settings-item-sub">App language preference</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 10. Appearance -->
+        <div class="settings-item" data-section="appearance">
+            <span class="settings-icon">🎨</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Appearance</span>
+                <span class="settings-item-sub">Theme, colors, font style</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 11. Linked Devices -->
+        <div class="settings-item" data-section="devices">
+            <span class="settings-icon">💻</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Linked Devices</span>
+                <span class="settings-item-sub">Connected devices</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- 12. Help & Support -->
+        <div class="settings-item" data-section="help">
+            <span class="settings-icon">🆘</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Help & Support</span>
+                <span class="settings-item-sub">FAQ, contact, report bug</span>
+            </div>
+            <span class="settings-arrow">›</span>
+        </div>
+
+        <!-- Logout -->
+        <div class="settings-item settings-danger" id="btn-logout">
+            <span class="settings-icon">🚪</span>
+            <div class="settings-item-info">
+                <span class="settings-item-title">Log Out</span>
+                <span class="settings-item-sub">Clear data & start fresh</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Settings Sub-Panel (shows individual section) -->
+<div class="settings-panel settings-sub" id="settings-sub" hidden>
+    <div class="settings-header">
+        <button class="icon-btn" id="settings-sub-back">←</button>
+        <h3 id="settings-sub-title">Section</h3>
+    </div>
+    <div class="settings-sub-body" id="settings-sub-body"></div>
+</div>
+
+<!-- New Chat Modal -->
+<div class="modal-overlay" id="modal-overlay" hidden>
+    <div class="modal">
+        <div class="modal-header">
+            <h3>New Chat</h3>
+            <button class="icon-btn" id="modal-close">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="connect-section">
+                <h4>📤 Share Your Code</h4>
+                <p>Give this code to someone to connect:</p>
+                <div class="code-display" id="my-code">------</div>
+                <div class="code-actions">
+                    <button class="btn-secondary btn-sm" id="btn-copy-code">📋 Copy</button>
+                    <button class="btn-secondary btn-sm" id="btn-show-qr">📱 Show QR</button>
+                </div>
+                <div id="qr-container" hidden>
+                    <canvas id="qr-canvas"></canvas>
+                </div>
+            </div>
+            <div class="divider"><span>OR</span></div>
+            <div class="connect-section">
+                <h4>📥 Enter a Code</h4>
+                <p>Enter someone's code to start chatting:</p>
+                <div class="code-input-wrap">
+                    <input type="text" class="field-input code-field" id="join-code" placeholder="Enter code..." maxlength="10" autocomplete="off">
+                    <button class="btn-primary btn-sm" id="btn-join">Connect</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Random Chat Lobby Overlay -->
+<div class="modal-overlay" id="random-overlay" hidden>
+    <div class="modal random-modal">
+        <div class="modal-header">
+            <h3>🎲 Talk to a Random Stranger</h3>
+            <button class="icon-btn" id="random-close">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="random-info">
+                <p>Go online and wait for someone to connect, or browse available strangers and pick one to chat with!</p>
+            </div>
+            <div class="random-status" id="random-status">
+                <button class="btn-primary" id="btn-go-online">🟢 Go Online — Let Strangers Find Me</button>
+            </div>
+            <div class="random-lobby-section">
+                <h4>Available Strangers <span class="random-count" id="random-count">0</span></h4>
+                <div class="random-lobby-list" id="random-lobby-list">
+                    <div class="random-empty">No strangers online yet. Be the first to go online!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chat context menu -->
+<div class="context-menu" id="context-menu" hidden>
+    <button data-action="reply">↩ Reply</button>
+    <button data-action="react">😊 React</button>
+    <button data-action="edit">✏️ Edit</button>
+    <button data-action="forward">↗ Forward</button>
+    <button data-action="copy">📋 Copy</button>
+    <button data-action="delete-me">🗑 Delete for me</button>
+    <button data-action="delete-all">🗑 Delete for everyone</button>
+</div>
+
+<!-- Emoji picker -->
+<div class="emoji-picker" id="emoji-picker" hidden>
+    <div class="emoji-grid" id="emoji-grid"></div>
+</div>
+
+<!-- Reaction picker -->
+<div class="reaction-picker" id="reaction-picker" hidden></div>
+
+<!-- Forward modal -->
+<div class="modal-overlay" id="forward-overlay" hidden>
+    <div class="modal modal-sm">
+        <div class="modal-header">
+            <h3>Forward Message</h3>
+            <button class="icon-btn" id="forward-close">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="forward-list" id="forward-list"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification sound -->
+<audio id="notif-sound" preload="auto" src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdH+Onp6Ti3VmaHSBkJ+elYx2Ym14hJSgnpOGcmZtfIqZnpqPgm5ob3+MmZ2aj4NtaG5/jZqdmo2BbGduhJCcnJqNgGxnb4SRnJyZjH5rZ2+FlJ2cmo1/bGdvhZWdnJmMfmtnb4WVnZyZjH5rZ2+Flp2cmYx+a2dvhpednJmMfmtncIaXnZuZjH5rZ3CGl52bmIx+a2ZwhpidnJmMfmtmcIeZnZuYjH5qZnCHmZ2bmIx+amZwh5mdm5iMfmpncIiZnJuYi35qZ3CImZybmIt+amhwiJmbm5eLfWpocoianJuXi31qaHKJmpybmIt9amt0i5ucm5eKfGprdIubnJuXintqa3SLm5ybl4p8amt0i5ucm5eKfGprdIucnJuXinxpa3WMnJybloqdaGt1jJycm5aKnGhsdoyMipuWipxobHaOj5ybloqbaWx0joiQm5WKm2hsdY+Jk5yVippoangA"></audio>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
+
+</body>
+</html>
